@@ -3,10 +3,14 @@ While making Rocket.Chat apps people have to go through a lots of steps of setti
 This App does all that work for you using a config file, which only has general info like `AppDirectory`, `DockerComposePath` ( If you want to give a custom file ), `admin` info etc.
 On launch it installs all the things which you would need and launches an RC Server with the admin user that you have provided and installs the app from your app directory to the server making testing of RC Apps way more easier.
 
+# Prerequisites
+- Docker ( start it while running the app)
+- If you're running rocket.chat apps make sure to install the necessary requirements like npm, node etc. 
+
 # How to use it ?
 - Start Docker
-- Download Docker Compose file from [Rocket.Chat Developer Docs](https://developer.rocket.chat), in case you want to provide any additional configurations, else the companion does everything by itself.
-- Make a `config.json` file with the same directory as of companion, with a minimum configuration of these fields.
+- Download Docker Compose file from [Rocket.Chat Developer Docs](https://developer.rocket.chat), in case you want to provide any additional configurations, else the companion downloads the preconfigured docker-compose file by itself, you don't have download anything.
+- If you want to override the default configuration, make a `config.json` file with the same directory as of companion, with a minimum configuration of these fields, the below are default fields.
 ```json
 {
     "admin" : {
@@ -39,3 +43,6 @@ In the end when every thing would be completed, you can open your `http://localh
 ![DemoCompanion](https://user-images.githubusercontent.com/72302948/211494912-abb1a8b4-dee2-4036-adef-3d7f1f7b4b04.gif)
 
 ### Made with ♥️ for [Rocket.Chat](https://www.rocket.chat) by [Henit Chobisa](https://twitter.com/henit_chobisa)
+
+## Note
+If you find any bug please open an issue, your contributions would be appreciated.
