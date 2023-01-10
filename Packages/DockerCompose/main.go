@@ -9,6 +9,12 @@ import (
 	"time"
 )
 
+// func downloadAppDockerCompose() error {
+// 	spinner := Figure.Spinner("🚀 Downloading preconfigured docker-compose.yml from web...", Colors.Blue(), "")
+// 	spinner.Start()
+// 	cmd := exec.Command("wget", "")
+// }
+
 func Up(path string) error {
 
 	spinner := Figure.Spinner("🚀 Starting Rocket Chat Server using Docker Compose file.", Colors.Yellow(), "")
@@ -20,7 +26,7 @@ func Up(path string) error {
 
 	if err != nil {
 		spinner.Stop()
-		fmt.Println(err)
+		fmt.Printf(Colors.Red()+"Docker-Compose Error : %v", err)
 		return err
 	}
 	spinner.Stop()
