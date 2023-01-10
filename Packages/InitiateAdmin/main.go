@@ -40,7 +40,15 @@ func setUser(user0 string, email string, pass string, name string) (bool, bool) 
 func Initiate(data map[string]interface{}) {
 	spinner := Figure.Spinner(" Creating Admin User, required for App Installation", Colors.Green(), "")
 	spinner.Start()
-	user := data["admin"].(map[string]interface{})
+	user := make(map[string]interface{}, 4)
+	if data["admin"] == nil {
+		user["email"] = "a@b.com"
+		user["username"] = "user0"
+		user["pass"] = "123456"
+		user["name"] = "user"
+	} else {
+		user = data["admin"].(map[string]interface{})
+	}
 	iterations := 0
 	status := false
 	breakLoop := false
@@ -55,10 +63,20 @@ func Initiate(data map[string]interface{}) {
 		iterations++
 	}
 	spinner.Stop()
+
+	if data["admin"] == nil {
+		fmt.Println(Colors.Red() + "Admin not Provided\n Considering Default Admin Values\n")
+		fmt.Println(Colors.Blue(), fmt.Sprintf("Username    :    %v", user["username"]))
+		fmt.Println(Colors.Blue(), fmt.Sprintf("Email       :    %v", user["email"]))
+		fmt.Println(Colors.Blue(), fmt.Sprintf("password    :    %v", user["pass"]))
+		fmt.Println(Colors.Blue(), fmt.Sprintf("name        :    %v", user["name"]))
+	}
+
 	if breakLoop {
 		fmt.Println("\n" + Colors.Green() + "⭕ Admin User Already Present, Gracefully Aborting Operation ...\n")
 		return
 	}
+
 	fmt.Println("\n" + Colors.Green() + "✅ Successfully created admin user for Rocket.Chat\n")
 
 }

@@ -40,9 +40,12 @@ func main() {
 	fmt.Printf("\n\n")
 	fmt.Println(Colors.Blue() + "Phase 3 : Installing App into Rocket.Chat Server\n" + Figure.Line())
 
-	user := data["admin"].(map[string]interface{})
-
-	InstallApp.Install(fmt.Sprintf("%v", data["appDir"]), "http://localhost:3000", fmt.Sprintf("%v", user["username"]), fmt.Sprintf("%v", user["pass"]))
+	if data["admin"] == nil {
+		InstallApp.Install(appDir, "http://localhost:3000", "user0", "123456")
+	} else {
+		user := data["admin"].(map[string]interface{})
+		InstallApp.Install(appDir, "http://localhost:3000", fmt.Sprintf("%v", user["username"]), fmt.Sprintf("%v", user["pass"]))
+	}
 
 	Logo.RocketChat()
 
