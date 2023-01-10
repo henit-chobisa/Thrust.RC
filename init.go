@@ -15,14 +15,22 @@ import (
 
 func main() {
 	data := ConfigReader.ReadConfig("config.json")
-	appData := ConfigReader.ReadConfig(fmt.Sprintf("%v/app.json", data["appDir"]))
+	appDir := "./"
+	if data["appDir"] != nil {
+		appDir = fmt.Sprintf("%v", data["appDir"])
+	}
+	appData := ConfigReader.ReadConfig(fmt.Sprintf("%v/app.json", appDir))
 
 	Logo.RocketChat()
 	Logo.Custom(fmt.Sprintf("%v App", appData["name"]))
 	fmt.Printf("\n\n\n")
 	fmt.Println(Colors.Blue() + "Phase 1 : Intiating Rocket Chat Apps Test Environment\n" + Figure.Line())
 
-	DockerCompose.Up(fmt.Sprintf("%v", data["composeFilePath"]))
+	composePath := "./docker-compose.yml"
+	if data["composeFilePath"] != nil {
+		composePath = fmt.Sprintf("%v", data["composeFilePath"])
+	}
+	DockerCompose.Up(composePath)
 	appscli.Install()
 
 	fmt.Printf("\n")
