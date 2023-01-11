@@ -11,6 +11,7 @@ On launch it sets up everything which you would need and launches an RC Server a
 
 # How to use it ?
 - Start Docker
+- Get Node.js and NPM Installed
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
  wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v0.1.1/RCTestSetup
