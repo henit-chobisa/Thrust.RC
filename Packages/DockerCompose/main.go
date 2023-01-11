@@ -16,8 +16,6 @@ func downloadAppDockerCompose() error {
 
 	_, err := cmd.CombinedOutput()
 	spinner.Stop()
-	fmt.Println("Hello World")
-	fmt.Println("Hello World")
 
 	if err != nil {
 		return err
@@ -34,7 +32,7 @@ func Up(path string) error {
 
 	p, err := cmd.CombinedOutput()
 
-	if err != nil {
+	if err != nil || p == "" {
 		spinner.Stop()
 		fmt.Printf(Colors.Red()+"Docker-Compose Error : %v", err)
 		if err.Error() == "exit status 14" {
