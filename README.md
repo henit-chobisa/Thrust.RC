@@ -53,7 +53,7 @@ In the end when every thing would be completed, you can open your `http://localh
 - Hot-Reloading in the companion is dependent upon watcher and watcher mode, watcher looks for the file changes in the directory and performs hot-reloading for your apps.
 
 
-### Made with ♥️ for [Rocket.Chat](https://www.rocket.chat) by [Henit Chobisa](https://twitter.com/henit_chobisa)
+### Made with ♥️ for [Rocket.Chat Apps](https://www.rocket.chat) by [Henit Chobisa](https://twitter.com/henit_chobisa)
 
 ## Note
 If you find any bug please open an issue, your contributions would be appreciated.
