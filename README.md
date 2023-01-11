@@ -11,7 +11,7 @@ On launch it sets up everything which you would need and launches an RC Server a
 
 # How to use it ?
 - Start Docker
-- Ensure docker-compose is present inside your system has admin previledges.
+- Ensure docker-compose V2 is present inside your system has admin previledges, docker-compose v1 won't be able to handle the docker-compose file and will throw errors.
 - Get Node.js and NPM Installed and has admin previledges, as the companion deals with global installations. [Check this out](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
