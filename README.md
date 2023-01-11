@@ -11,6 +11,7 @@ On launch it sets up everything which you would need and launches an RC Server a
 
 # How to use it ?
 - Start Docker
+- Ensure docker-compose inside your system
 - Get Node.js and NPM Installed
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
