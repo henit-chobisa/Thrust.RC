@@ -13,7 +13,7 @@ On launch it sets up everything which you would need and launches an RC Server a
 - Start Docker
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
- wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/0.1.1/RCTestSetup
+ wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v0.1.1/RCTestSetup
  chmod +x RC_AppTestCompanion
 ```
 - Now execute the binary in your shell 
