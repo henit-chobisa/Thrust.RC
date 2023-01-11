@@ -5,6 +5,7 @@ import (
 	"RCTestSetup/Packages/Figure"
 	"bytes"
 	"fmt"
+	"os"
 	"os/exec"
 	"time"
 )
@@ -24,21 +25,24 @@ func downloadAppDockerCompose() error {
 	return nil
 }
 
+func checkFile(path string) {
+	if _, err := os.Stat(path); err != nil {
+		downloadAppDockerCompose()
+	}
+}
+
 func Up(path string) error {
 	spinner := Figure.Spinner("🚀 Starting Rocket Chat Server using Docker Compose file.", Colors.Yellow(), "")
 	spinner.Start()
 	time.Sleep(2 * time.Second)
+	checkFile(path)
 	cmd := exec.Command("docker-compose", "-f", path, "up", "-d")
 
 	p, err := cmd.CombinedOutput()
 
-	if err != nil || p == "" {
+	if err != nil || len(p) == 0 {
 		spinner.Stop()
-		fmt.Printf(Colors.Red()+"Docker-Compose Error : %v", err)
-		if err.Error() == "exit status 14" {
-			downloadAppDockerCompose()
-			Up("./docker-compose.yml")
-		}
+		fmt.Printf(Colors.Red()+"Docker-Compose Error : %v\n", err)
 		return err
 	}
 	spinner.Stop()
