@@ -9,7 +9,7 @@ import (
 func RocketChat() {
 	fmt.Printf("\n\n\n\n")
 	figure.NewColorFigure("Rocket.Chat", "banner", "Red", true).Print()
-	fmt.Printf("\n\n")
+	fmt.Printf("\n")
 }
 
 func Custom(text string) {

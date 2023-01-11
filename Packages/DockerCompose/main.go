@@ -16,6 +16,8 @@ func downloadAppDockerCompose() error {
 
 	_, err := cmd.CombinedOutput()
 	spinner.Stop()
+	fmt.Println("Hello World")
+	fmt.Println("Hello World")
 
 	if err != nil {
 		return err
