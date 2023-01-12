@@ -54,6 +54,12 @@ In the end when every thing would be completed, you can open your `http://localh
 - The above is the default configuration used by the companion.
 - Hot-Reloading in the companion is dependent upon watcher and watcher mode, watcher looks for the file changes in the directory and performs hot-reloading for your apps.
 
+### debugging
+- Docker-Compose "executable file not found in $PATH"
+```
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
 
 ### Made with ♥️ for [Rocket.Chat Apps](https://www.rocket.chat) by [Henit Chobisa](https://twitter.com/henit_chobisa)
 
