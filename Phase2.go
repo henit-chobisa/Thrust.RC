@@ -1,9 +1,9 @@
 package main
 
 import (
-	"RCTestSetup/Packages/Colors"
-	"RCTestSetup/Packages/Figure"
-	initiateadmin "RCTestSetup/Packages/InitiateAdmin"
+	"AppsCompanion/Packages/Colors"
+	"AppsCompanion/Packages/Figure"
+	initiateadmin "AppsCompanion/Packages/InitiateAdmin"
 	"fmt"
 )
 

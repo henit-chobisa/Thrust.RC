@@ -1,8 +1,8 @@
 package initiateadmin
 
 import (
-	"RCTestSetup/Packages/Colors"
-	"RCTestSetup/Packages/Figure"
+	"AppsCompanion/Packages/Colors"
+	"AppsCompanion/Packages/Figure"
 	"bytes"
 	"encoding/json"
 	"fmt"

@@ -1,9 +1,9 @@
 package watcher
 
 import (
-	"RCTestSetup/Packages/Colors"
-	constants "RCTestSetup/Packages/Constants"
-	"RCTestSetup/Packages/InstallApp"
+	"AppsCompanion/Packages/Colors"
+	constants "AppsCompanion/Packages/Constants"
+	"AppsCompanion/Packages/InstallApp"
 	"fmt"
 	"os"
 	"path/filepath"

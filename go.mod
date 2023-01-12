@@ -1,4 +1,4 @@
-module RCTestSetup
+module AppsCompanion
 
 go 1.19
 

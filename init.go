@@ -1,9 +1,9 @@
 package main
 
 import (
-	"RCTestSetup/Packages/ConfigReader"
-	constants "RCTestSetup/Packages/Constants"
-	watcher "RCTestSetup/Packages/FileWatcher"
+	"AppsCompanion/Packages/ConfigReader"
+	constants "AppsCompanion/Packages/Constants"
+	watcher "AppsCompanion/Packages/FileWatcher"
 	"fmt"
 	"os/exec"
 )

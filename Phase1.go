@@ -1,13 +1,13 @@
 package main
 
 import (
-	appscli "RCTestSetup/Packages/AppsCli"
-	"RCTestSetup/Packages/Colors"
-	"RCTestSetup/Packages/ConfigReader"
-	constants "RCTestSetup/Packages/Constants"
-	"RCTestSetup/Packages/DockerCompose"
-	"RCTestSetup/Packages/Figure"
-	"RCTestSetup/Packages/Logo"
+	appscli "AppsCompanion/Packages/AppsCli"
+	"AppsCompanion/Packages/Colors"
+	"AppsCompanion/Packages/ConfigReader"
+	constants "AppsCompanion/Packages/Constants"
+	"AppsCompanion/Packages/DockerCompose"
+	"AppsCompanion/Packages/Figure"
+	"AppsCompanion/Packages/Logo"
 	"fmt"
 )
 

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"RCTestSetup/Packages/Colors"
-	"RCTestSetup/Packages/Figure"
-	"RCTestSetup/Packages/InstallApp"
-	"RCTestSetup/Packages/Logo"
+	"AppsCompanion/Packages/Colors"
+	"AppsCompanion/Packages/Figure"
+	"AppsCompanion/Packages/InstallApp"
+	"AppsCompanion/Packages/Logo"
 	"fmt"
 )
 

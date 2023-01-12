@@ -18,12 +18,12 @@ Have a look once of [this](https://henitchobisa.notion.site/Setting-up-App-s-Com
 - Get Node.js and NPM Installed and has admin previledges, as the companion deals with global installations. [Check this out](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
- wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v0.1.1/RCTestSetup
- chmod +x RCTestSetup
+ wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v0.1.1/AppsCompanion
+ chmod +x AppsCompanion
 ```
 - Now execute the binary in your shell 
 ```sh
-./RCTestSetup
+./AppsCompanion
 ```
 That's it sit back & relax!
 
