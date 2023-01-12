@@ -18,14 +18,14 @@ Have a look once of [this](https://henitchobisa.notion.site/Setting-up-App-s-Com
 - Get Node.js and NPM Installed and has admin previledges, as the companion deals with global installations. [Check this out](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
- wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v0.1.1/AppsCompanion
- chmod +x AppsCompanion
+ wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v0.1.1/AppsCompanion_linux
+ chmod +x AppsCompanion_linux
 ```
 - Now execute the binary in your shell 
 ```sh
-./AppsCompanion
+./AppsCompanion_linux
 ```
-That's it sit back & relax!
+Use mac binary if you're a mac user, That's it sit back & relax!
 
 # How it looks like ?
 The execution takes place in `3 Phases` and once the app detects your `app.json` it will show your app name, below Rocket.Chat, you can see the logs on the completion of each step.
