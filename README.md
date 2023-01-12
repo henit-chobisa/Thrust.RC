@@ -8,6 +8,9 @@ On launch it sets up everything which you would need and launches an RC Server a
 
 # Prerequisites
 - Docker in running state, that's it.
+- docker-compose V2
+- npm with global previledges 
+Have a look once of [this](https://henitchobisa.notion.site/Setting-up-App-s-Companion-in-EC2-fdde72b19afc40ed93c9ded5887a641c), it will help you check your configurations.
 
 # How to use it ?
 - Start Docker
@@ -53,6 +56,9 @@ In the end when every thing would be completed, you can open your `http://localh
 - If you want to override the configuration of the companion, make a `config.json` file in the same directory as the binary.
 - The above is the default configuration used by the companion.
 - Hot-Reloading in the companion is dependent upon watcher and watcher mode, watcher looks for the file changes in the directory and performs hot-reloading for your apps.
+
+## Using on EC2 Instance
+Please have a look on this [short manual](https://henitchobisa.notion.site/Setting-up-App-s-Companion-in-EC2-fdde72b19afc40ed93c9ded5887a641c) for end to end configuration of your ec2 with Apps' conpanion.
 
 ### debugging
 - Docker-Compose "executable file not found in $PATH"
