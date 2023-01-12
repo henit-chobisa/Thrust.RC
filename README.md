@@ -16,11 +16,11 @@ On launch it sets up everything which you would need and launches an RC Server a
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
  wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v0.1.1/RCTestSetup
- chmod +x RC_AppTestCompanion
+ chmod +x RCTestSetup
 ```
 - Now execute the binary in your shell 
 ```sh
-./RC_AppTestCompanion
+./RCTestSetup
 ```
 That's it sit back & relax!
 
