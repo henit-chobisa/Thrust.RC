@@ -2,11 +2,9 @@ package main
 
 import (
 	appscli "RCTestSetup/Packages/AppsCli"
-	"RCTestSetup/Packages/Colors"
 	"RCTestSetup/Packages/ConfigReader"
 	constants "RCTestSetup/Packages/Constants"
 	"RCTestSetup/Packages/DockerCompose"
-	"RCTestSetup/Packages/Figure"
 	"RCTestSetup/Packages/Logo"
 	"fmt"
 )
@@ -15,7 +13,7 @@ func showInfo(name string) {
 	Logo.RocketChat()
 	Logo.Custom(name)
 	fmt.Printf("\n\n\n")
-	fmt.Println(Colors.Blue() + "Phase 1 : Intiating Rocket Chat Apps Test Environment\n" + Figure.Line())
+	fmt.Println(constants.Blue + "Phase 1 : Intiating Rocket Chat Apps Test Environment\n" + constants.Line)
 }
 
 func InitiatePhase1(data map[string]interface{}, appDir string) {

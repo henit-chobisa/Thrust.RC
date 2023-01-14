@@ -1,7 +1,6 @@
 package watcher
 
 import (
-	"RCTestSetup/Packages/Colors"
 	constants "RCTestSetup/Packages/Constants"
 	"RCTestSetup/Packages/InstallApp"
 	"fmt"
@@ -54,9 +53,9 @@ func Watch(path string, mode string) error {
 		mode = constants.AppDir_mode_deep
 	}
 
-	fmt.Println(Colors.Purple() + "🔫 Started hot reloading with below configuration\n" + "Watcher Mode    :    " + mode + "\n" + "Path            :    " + path + "\n\n")
+	fmt.Println(constants.Purple + "🔫 Started hot reloading with below configuration\n" + "Watcher Mode    :    " + mode + "\n" + "Path            :    " + path + "\n\n")
 
-	fmt.Println(Colors.Purple() + "Waiting for file changes on path " + path)
+	fmt.Println(constants.Purple + "Waiting for file changes on path " + path)
 
 	var timer *time.Timer
 

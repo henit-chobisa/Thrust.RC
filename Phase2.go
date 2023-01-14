@@ -1,13 +1,12 @@
 package main
 
 import (
-	"RCTestSetup/Packages/Colors"
-	"RCTestSetup/Packages/Figure"
+	constants "RCTestSetup/Packages/Constants"
 	initiateadmin "RCTestSetup/Packages/InitiateAdmin"
 	"fmt"
 )
 
 func InitiatePhase2(data map[string]interface{}) {
-	fmt.Println(Colors.Blue() + "Phase 2 : Configuring Rocket.Chat App, installing admin\n" + Figure.Line())
+	fmt.Println(constants.Blue + "Phase 2 : Configuring Rocket.Chat App, installing admin\n" + constants.Line)
 	initiateadmin.Initiate(data)
 }
