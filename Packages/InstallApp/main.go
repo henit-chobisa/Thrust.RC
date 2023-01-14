@@ -1,8 +1,8 @@
 package InstallApp
 
 import (
-	"RCTestSetup/Packages/Colors"
-	"RCTestSetup/Packages/Figure"
+	constants "RCTestSetup/Packages/Constants"
+	"RCTestSetup/Packages/UIAssets"
 	"bytes"
 
 	"fmt"
@@ -16,7 +16,7 @@ func Install(path string, url string, username string, password string, reload b
 	} else {
 		message = " Installing App into the Rocket.Chat testing server"
 	}
-	spinner := Figure.Spinner(message, Colors.Purple(), "")
+	spinner := UIAssets.Spinner(message, constants.Purple, "")
 	spinner.Start()
 	cmd := exec.Command("rc-apps", "deploy", "--url", url, "--username", username, "--password", password)
 	cmd.Dir = path
@@ -25,12 +25,12 @@ func Install(path string, url string, username string, password string, reload b
 
 	if err != nil {
 		spinner.Stop()
-		fmt.Println(Colors.Red() + err.Error())
+		fmt.Println(constants.Red + err.Error())
 		return err
 	}
 	spinner.Stop()
 
-	fmt.Printf("\n" + Colors.Purple() + "🚀 Successfully installed app into the Rocket.Chat testing server\n")
-	fmt.Println(Colors.Purple(), fmt.Sprint("\n\n", bytes.NewBuffer(p)))
+	fmt.Printf("\n" + constants.Purple + "🚀 Successfully installed app into the Rocket.Chat testing server\n")
+	fmt.Println(constants.Purple, fmt.Sprint("\n\n", bytes.NewBuffer(p)))
 	return nil
 }

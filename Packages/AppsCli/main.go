@@ -1,20 +1,19 @@
 package appscli
 
 import (
-	"RCTestSetup/Packages/Colors"
-	"RCTestSetup/Packages/Figure"
+	constants "RCTestSetup/Packages/Constants"
+	"RCTestSetup/Packages/UIAssets"
 	"bytes"
 	"fmt"
 	"os/exec"
 )
 
 func Install() error {
-	// npm install -g
-	spinner := Figure.Spinner("🔻 Installing Rocket.Chat Apps CLI globally using npm.", Colors.Cyan(), "")
+	spinner := UIAssets.Spinner("🔻 Installing Rocket.Chat Apps CLI globally using npm.", constants.Cyan, "")
 	spinner.Start()
-	cmd := exec.Command("npm", "install", "-g", "@rocket.chat/apps-cli")
+	cmd := exec.Command("sudo", "npm", "install", "-g", "@rocket.chat/apps-cli")
 
-	p, err := cmd.CombinedOutput()
+	p, err := cmd.Output()
 
 	if err != nil {
 		fmt.Println(err)
@@ -22,8 +21,8 @@ func Install() error {
 		return err
 	}
 	spinner.Stop()
-	fmt.Println("\n" + Colors.Cyan() + "🔻 Installed Rocket.Chat Apps CLI globally using npm.")
-	fmt.Println(Colors.Cyan(), fmt.Sprint("\n\n", bytes.NewBuffer(p)))
+	fmt.Println("\n" + constants.Cyan + "🔻 Installed Rocket.Chat Apps CLI globally using npm.")
+	fmt.Println(constants.Cyan, fmt.Sprint("\n\n", bytes.NewBuffer(p)))
 
 	return nil
 }

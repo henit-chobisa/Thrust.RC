@@ -1,8 +1,8 @@
 package initiateadmin
 
 import (
-	"RCTestSetup/Packages/Colors"
-	"RCTestSetup/Packages/Figure"
+	constants "RCTestSetup/Packages/Constants"
+	"RCTestSetup/Packages/UIAssets"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -38,7 +38,7 @@ func setUser(user0 string, email string, pass string, name string) (bool, bool) 
 }
 
 func Initiate(data map[string]interface{}) {
-	spinner := Figure.Spinner(" Creating Admin User, required for App Installation", Colors.Green(), "")
+	spinner := UIAssets.Spinner(" Creating Admin User, required for App Installation", constants.Green, "")
 	spinner.Start()
 	user := make(map[string]interface{}, 4)
 	if data["admin"] == nil {
@@ -65,18 +65,18 @@ func Initiate(data map[string]interface{}) {
 	spinner.Stop()
 
 	if data["admin"] == nil {
-		fmt.Println(Colors.Red() + "Admin not Provided\n Considering Default Admin Values\n")
-		fmt.Println(Colors.Blue(), fmt.Sprintf("Username    :    %v", user["username"]))
-		fmt.Println(Colors.Blue(), fmt.Sprintf("Email       :    %v", user["email"]))
-		fmt.Println(Colors.Blue(), fmt.Sprintf("password    :    %v", user["pass"]))
-		fmt.Println(Colors.Blue(), fmt.Sprintf("name        :    %v", user["name"]))
+		fmt.Println(constants.Red + "Admin not Provided\n Considering Default Admin Values")
+		fmt.Println(constants.Blue, fmt.Sprintf("Username    :    %v", user["username"]))
+		fmt.Println(constants.Blue, fmt.Sprintf("Email       :    %v", user["email"]))
+		fmt.Println(constants.Blue, fmt.Sprintf("password    :    %v", user["pass"]))
+		fmt.Println(constants.Blue, fmt.Sprintf("name        :    %v", user["name"]))
 	}
 
 	if breakLoop {
-		fmt.Println("\n" + Colors.Green() + "⭕ Admin User Already Present, Gracefully Aborting Operation ...\n")
+		fmt.Println("\n" + constants.Green + "⭕ Admin User Already Present, Gracefully Aborting Operation ...")
 		return
 	}
 
-	fmt.Println("\n" + Colors.Green() + "✅ Successfully created admin user for Rocket.Chat\n")
+	fmt.Println("\n" + constants.Green + "✅ Successfully created admin user for Rocket.Chat")
 
 }

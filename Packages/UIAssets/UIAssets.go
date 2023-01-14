@@ -1,14 +1,9 @@
-package Figure
+package UIAssets
 
 import (
-	"time"
-
 	"github.com/briandowns/spinner"
+	"time"
 )
-
-func Line() string {
-	return "-----------------------------------------------------------------------------------------------------------------------------------------"
-}
 
 func Spinner(text string, color string, line string) *spinner.Spinner {
 	s := spinner.New([]string{"∙∙∙", "●∙∙", "∙●∙", "∙∙●", "∙∙∙"}, 600*time.Millisecond)
