@@ -63,6 +63,9 @@ func checkConfig(appDir string) {
 }
 
 func generateDefaultConfig(appDir string) {
+
+	fmt.Println(appDir)
+
 	viper.SetDefault("configPath", "./")
 	viper.SetDefault("appDir", appDir)
 	viper.SetDefault("admin.username", Username)
@@ -75,5 +78,5 @@ func generateDefaultConfig(appDir string) {
 	viper.SetDefault("composeFilePath", "./")
 	viper.SetDefault("installDependencies", Deps)
 
-	viper.WriteConfigAs(appDir + ".rc.yml")
+	viper.WriteConfigAs(".rc.yml")
 }
