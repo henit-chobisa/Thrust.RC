@@ -6,12 +6,6 @@ import (
 
 func main() {
 	cmd.Execute()
-	// data := ConfigReader.ReadConfig("config.json")
-	// appDir := constants.AppDir_default
-
-	// if data["appDir"] != nil {
-	// 	appDir = fmt.Sprintf("%v", data["appDir"])
-	// }
 
 	// InitiatePhase1(data, appDir)
 	// InitiatePhase2(data)
