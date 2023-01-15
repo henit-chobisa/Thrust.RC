@@ -2,13 +2,12 @@ package Logo
 
 import (
 	"fmt"
-
 	"github.com/common-nighthawk/go-figure"
 )
 
 func RocketChat() {
 	fmt.Printf("\n\n\n\n")
-	figure.NewColorFigure("Rocket.Chat", "banner", "Red", true).Print()
+	figure.NewColorFigure("Rocket.Chat", "", "Red", true).Print()
 	fmt.Printf("\n")
 }
 

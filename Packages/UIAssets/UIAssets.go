@@ -1,8 +1,9 @@
 package UIAssets
 
 import (
-	"github.com/briandowns/spinner"
 	"time"
+
+	"github.com/briandowns/spinner"
 )
 
 func Spinner(text string, color string, line string) *spinner.Spinner {

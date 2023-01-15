@@ -27,7 +27,7 @@ func Execute() {
 
 func initializeConfig() {
 	viper.SetConfigName(".rc")
-	viper.SetConfigType(".yml")
+	viper.SetConfigType("yaml")
 }
 
 func init() {
