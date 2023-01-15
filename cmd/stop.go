@@ -2,6 +2,7 @@ package cmd
 
 import (
 	constants "RCTestSetup/Packages/Constants"
+	"fmt"
 
 	"github.com/spf13/cobra"
 )
@@ -16,6 +17,9 @@ var stopCommand = &cobra.Command{
 	Long:                  "This command stops and optionally removes containers and volumes such as Rocket.Chat mongodb etc responsible for execution of the companion, if removed the companion has to download them again.",
 	DisableFlagsInUseLine: true,
 	Args:                  cobra.ExactArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("Function Ran")
+	},
 }
 
 func init() {
