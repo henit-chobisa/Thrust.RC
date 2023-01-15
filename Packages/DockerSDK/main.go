@@ -1,5 +1,0 @@
-package dockersdk
-
-func main() {
-
-}

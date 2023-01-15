@@ -3,17 +3,17 @@ package enums
 type StartOption int
 
 const (
-	config StartOption = iota + 1
-	watcher
-	username
-	email
-	password
-	name
-	virtual
-	deps
-	composeFilePath
+	Config StartOption = iota + 1
+	Watcher
+	Username
+	Email
+	Password
+	Name
+	Virtual
+	Deps
+	ComposeFilePath
 )
 
 func (s StartOption) String() string {
-	return [...]string{"config", "watcher", "username", "email", "password", "name", "virtual", "deps", "composeFilePath"}[s-1]
+	return [...]string{"config", "watcher.watcher", "admin.username", "admin.email", "admin.password", "admin.name", "virtual", "deps", "composeFilePath"}[s-1]
 }
