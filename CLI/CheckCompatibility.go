@@ -11,7 +11,7 @@ import (
 
 var (
 	checkMarkTrue  = lipgloss.NewStyle().Foreground(lipgloss.Color("42")).SetString("✓")
-	checkMarkFalse = lipgloss.NewStyle().Foreground(lipgloss.Color("41")).SetString("×")
+	checkMarkFalse = lipgloss.NewStyle().Foreground(lipgloss.Color("#ff2255")).SetString("×")
 )
 
 type DependencyModel struct {
@@ -63,7 +63,7 @@ func (d DependencyModel) View() string {
 
 	if d.err != nil {
 		info := lipgloss.NewStyle().Render("Something is probably wrong, confirm that your docker-daemon is running, please.")
-		return fmt.Sprintf("%s %s", checkMarkFalse, info)
+		return fmt.Sprintf("%s %s\n\n Press (q) to quit", checkMarkFalse, info)
 	}
 
 	return fmt.Sprintf("%s Compatible Docker Version Found: %s\n", checkMarkTrue, d.dockerVersion) + fmt.Sprintf("%s Compatible Docker Engine Type : %s\n", checkMarkTrue, d.dockerEngineType) + fmt.Sprintf("%s Running Docker API Version: %s\n", checkMarkTrue, d.dockerAPIVersion) + fmt.Sprintf("%s On Operating System: %s\n", checkMarkTrue, d.os)
