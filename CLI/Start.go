@@ -39,9 +39,11 @@ func (s StartModel) Init() tea.Cmd {
 }
 
 func (s StartModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	tea.Quit()
 	return s, nil
 }
 
 func (s StartModel) View() string {
+
 	return "hello, the start program is up and running..."
 }
