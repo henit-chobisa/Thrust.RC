@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	cli "RCTestSetup/CLI"
 	constants "RCTestSetup/Packages/Constants"
+	cli "RCTestSetup/tui"
 	"fmt"
 	"os"
 
@@ -19,11 +19,12 @@ var start = &cobra.Command{
 	Args:                  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		checkConfig(args[0])
-		program := tea.NewProgram(cli.InitialCompatibilityModel(), tea.WithAltScreen())
-		if _, err := program.Run(); err != nil {
+		UIModel := tea.NewProgram(cli.New(), tea.WithAltScreen())
+		if _, err := UIModel.Run(); err != nil {
 			fmt.Printf("Alas, there's been an error: %v", err)
 			os.Exit(1)
 		}
+
 		return nil
 	},
 }
