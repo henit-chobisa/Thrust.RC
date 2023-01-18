@@ -1,7 +1,7 @@
 package Page
 
 import (
-	"RCTestSetup/tui/components"
+	"RCTestSetup/enums"
 	"RCTestSetup/tui/theme"
 
 	"github.com/charmbracelet/bubbles/list"
@@ -12,7 +12,7 @@ import (
 type Task struct {
 	title       string
 	description string
-	model       components.Model
+	model       tea.Model
 	Output      string
 }
 
@@ -30,81 +30,110 @@ func (t Task) Description() string {
 
 type Model struct {
 	tasks       list.Model
-	currentTask string
+	currentTask enums.Task
 	views       []string
 	width       int
 	height      int
 	loaded      bool
 }
 
+type LoadingStart int
+
+func startLoading() tea.Msg {
+	return LoadingStart(1)
+}
+
+type LoadingStop int
+
+func stopLoading() tea.Msg {
+	return LoadingStop(1)
+}
+
+func (m *Model) ExecuteList() tea.Msg {
+	return LoadingStart(1)
+}
+
 func (m *Model) initTasks(width int, height int) {
-	m.tasks = list.New([]list.Item{}, list.NewDefaultDelegate(), width, height)
+
+	delegate := list.NewDefaultDelegate()
+	delegate.Styles = NewDefaultItemStyles()
+
+	m.tasks = list.New([]list.Item{}, delegate, width, height)
 	m.tasks.Title = "Current Tasks"
-	m.tasks.ToggleSpinner()
+	m.tasks.Styles = list.Styles(*DefaultStyles())
+	m.tasks.SetShowStatusBar(false)
+	m.tasks.SetShowHelp(false)
+
 	m.tasks.SetItems([]list.Item{
 		Task{
-			title:       "Checking Initial Configuration",
+			title:       enums.Check_Initial_Configuration.String(),
 			description: "Confirm compatibility version and dependencies.",
 			model:       DependencyModel{},
 			Output:      "",
 		},
 		Task{
-			title:       "Pull Containers",
+			title:       enums.Pull_Containers.String(),
 			description: "Pull containers needy for running the companion, rocket.chat, companion env.",
 			model:       DependencyModel{},
 			Output:      "",
 		},
 		Task{
-			title:       "Run the containers",
+			title:       enums.Run_containers.String(),
 			description: "Pull containers needy for running the companion, rocket.chat, companion env.",
 			model:       DependencyModel{},
 			Output:      "",
 		},
 		Task{
-			title:       "Setup Project Environment",
+			title:       enums.Setup_Project_Environment.String(),
 			description: "Pull containers needy for running the companion, rocket.chat, companion env.",
 			model:       DependencyModel{},
 			Output:      "",
 		},
 		Task{
-			title:       "Pull Companion Containers",
+			title:       enums.Setup_Project_Environment.String(),
 			description: "Pull containers needy for running the companion, rocket.chat, companion env.",
 			model:       DependencyModel{},
 			Output:      "",
 		},
 		Task{
-			title:       "Companion Logs",
+			title:       enums.Show_Companion_Logs.String(),
 			description: "Pull containers needy for running the companion, rocket.chat, companion env.",
 			model:       DependencyModel{},
 			Output:      "",
 		},
 	})
-
 }
 
 func New() *Model {
 	return &Model{
-		currentTask: "Checking Initial Configuration",
+		currentTask: 1,
 		views:       []string{},
 	}
 }
 
 func (m *Model) Init() tea.Cmd {
-	return nil
+	return m.ExecuteList
 }
 
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		m.height, m.width = msg.Height, msg.Width
-		if !m.loaded {
-			m.loaded = true
-		}
-		m.initTasks(m.Width()/2, m.Height())
+		// case loadingStart:
+		// 	switch msg {
+		// 	case 1:
+		// 		if m.loaded {
+		// 			m.tasks.Select(3)
+		// 		}
+		// 	}
+		// }
 	}
-	var cmd tea.Cmd
-	m.tasks, cmd = m.tasks.Update(msg)
-	return m, cmd
+	if m.loaded {
+		var cmd tea.Cmd
+		m.tasks, cmd = m.tasks.Update(msg)
+		return m, cmd
+	}
+	return m, nil
 }
 
 func (m *Model) View() string {
@@ -112,10 +141,10 @@ func (m *Model) View() string {
 		return "Loading..."
 	}
 	pageStyle := lipgloss.NewStyle().Height(m.height).Width(m.width/2).MarginLeft(15).Border(lipgloss.RoundedBorder()).BorderForeground(theme.PrimaryColour).Padding(2, 3, 1, 3)
-	return lipgloss.JoinHorizontal(lipgloss.Center, m.tasks.View(), pageStyle.Render(lipgloss.JoinVertical(lipgloss.Left)))
+	return lipgloss.JoinHorizontal(lipgloss.Center, m.tasks.View(), pageStyle.Render(lipgloss.JoinVertical(lipgloss.Left, m.tasks.SelectedItem().(Task).model.View())))
 }
 
-func (m *Model) Resize(width, height int) components.Model {
+func (m *Model) Resize(width, height int) *Model {
 	m.height = height
 	m.width = width
 	if !m.loaded {

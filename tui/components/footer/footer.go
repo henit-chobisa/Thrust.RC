@@ -1,8 +1,6 @@
 package footer
 
 import (
-	"RCTestSetup/tui/components"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -38,7 +36,7 @@ func (m Model) View() string {
 	}
 }
 
-func (m Model) Resize(width, height int) components.Model {
+func (m Model) Resize(width, height int) Model {
 	m.width = width
 	return m
 }

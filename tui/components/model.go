@@ -2,9 +2,10 @@ package components
 
 import tea "github.com/charmbracelet/bubbletea"
 
-type Model interface {
+type Model[T any] interface {
 	tea.Model
-	Resize(width, height int) Model
+	New() T
+	Resize(width, height int) T
 	Width() int
 	Height() int
 }

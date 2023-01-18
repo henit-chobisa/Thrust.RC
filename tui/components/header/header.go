@@ -3,8 +3,6 @@ package header
 import (
 	"strings"
 
-	"RCTestSetup/tui/components"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -59,7 +57,7 @@ func (m Model) View() string {
 	return b.String()
 }
 
-func (m Model) Resize(width, height int) components.Model {
+func (m Model) Resize(width, height int) Model {
 	m.width = width
 	return m
 }

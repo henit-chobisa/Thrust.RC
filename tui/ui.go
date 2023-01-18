@@ -1,7 +1,6 @@
 package tui
 
 import (
-	"RCTestSetup/tui/components"
 	"RCTestSetup/tui/components/Page"
 	"RCTestSetup/tui/components/footer"
 	"RCTestSetup/tui/components/header"
@@ -12,16 +11,16 @@ import (
 )
 
 type UI struct {
-	header components.Model
-	footer components.Model
-	page   components.Model
+	header header.Model
+	footer footer.Model
+	page   Page.Model
 }
 
 func New() UI {
 	return UI{
 		header: header.New("Rocket.Chat", "1.0.0", "Companion for Rocket.Chat Apps"),
 		footer: footer.New(nil, "Hello we are going to initiate the task right now"),
-		page:   Page.New(),
+		page:   *Page.New(),
 	}
 }
 
@@ -40,7 +39,7 @@ func (u UI) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		pageX := msg.Width - x
 		pageY := msg.Height - (y + u.header.Height() + u.footer.Height())
 
-		u.page = u.page.Resize(pageX, pageY)
+		u.page = *(u.page).Resize(pageX, pageY)
 
 		return u, nil
 	case tea.KeyMsg:
@@ -49,7 +48,7 @@ func (u UI) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return u, tea.Quit
 		}
 	}
-
+	u.page.Update(msg)
 	return u, nil
 }
 

@@ -2,7 +2,6 @@ package Page
 
 import (
 	"RCTestSetup/Packages/DockerSDK"
-	"RCTestSetup/tui/components"
 	"fmt"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -72,7 +71,7 @@ func (d DependencyModel) View() string {
 	return lipgloss.JoinVertical(lipgloss.Left, textStyle.Render(fmt.Sprintf("%s Compatible Docker Version Found: %s\n", checkMarkTrue, d.dockerVersion)), textStyle.Render(fmt.Sprintf("%s Compatible Docker Engine Type : %s\n", checkMarkTrue, d.dockerEngineType)), textStyle.Render(fmt.Sprintf("%s Running Docker API Version: %s\n", checkMarkTrue, d.dockerAPIVersion)), textStyle.Render(fmt.Sprintf("%s On Operating System: %s\n", checkMarkTrue, d.os)))
 }
 
-func (d DependencyModel) Resize(width, height int) components.Model {
+func (d DependencyModel) Resize(width, height int) DependencyModel {
 	d.width = width
 	return d
 }
