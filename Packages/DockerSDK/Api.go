@@ -2,6 +2,9 @@ package DockerSDK
 
 import (
 	"context"
+	"io"
+	"os"
+	"sync"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
@@ -9,7 +12,7 @@ import (
 )
 
 type Docker struct {
-	client  *client.Client
+	Client  *client.Client
 	images  []string
 	network types.NetworkResource
 }
@@ -19,11 +22,11 @@ func GetVersionInfo() (*types.Version, error) {
 	if err != nil {
 		return nil, err
 	}
-	version, err := c.client.ServerVersion(context.Background())
+	version, err := c.Client.ServerVersion(context.Background())
 	if err != nil {
 		return nil, err
 	}
-	c.client.Close()
+	c.Client.Close()
 	return &version, nil
 }
 
@@ -33,13 +36,13 @@ func GetNewClient() (*Docker, error) {
 		return nil, err
 	}
 	docker := Docker{
-		client: c,
+		Client: c,
 	}
 	return &docker, nil
 }
 
 func (d *Docker) FindImages(filters filters.Args) (*[]types.ImageSummary, error) {
-	images, err := d.client.ImageList(context.TODO(), types.ImageListOptions{
+	images, err := d.Client.ImageList(context.TODO(), types.ImageListOptions{
 		All:     true,
 		Filters: filters,
 	})
@@ -52,7 +55,7 @@ func (d *Docker) FindImages(filters filters.Args) (*[]types.ImageSummary, error)
 }
 
 func (d *Docker) FindContainers(filters filters.Args) (*[]types.Container, error) {
-	containers, err := d.client.ContainerList(context.TODO(), types.ContainerListOptions{
+	containers, err := d.Client.ContainerList(context.TODO(), types.ContainerListOptions{
 		Size:    true,
 		All:     true,
 		Since:   "Container",
@@ -63,4 +66,18 @@ func (d *Docker) FindContainers(filters filters.Args) (*[]types.Container, error
 		return nil, err
 	}
 	return &containers, err
+}
+
+func (d *Docker) PullImage(image string, wg *sync.WaitGroup) error {
+	defer wg.Done()
+	out, err := d.Client.ImagePull(context.TODO(), image, types.ImagePullOptions{})
+
+	if err != nil {
+		wg.Done()
+		return err
+	}
+
+	io.Copy(os.Stdout, out)
+	out.Close()
+	return nil
 }
