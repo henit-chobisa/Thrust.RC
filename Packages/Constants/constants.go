@@ -8,6 +8,12 @@ const (
 	AppDir_default        = "./"
 )
 
+const (
+	RocketChatImage = "registry.rocket.chat/rocketchat/rocket.chat:latest"
+	MongoDBImage    = "bitnami/mongodb:4.4"
+	CompanionImage  = "henit0885/rcapps-companion-env:1.0.0"
+)
+
 // Colors
 const (
 	Red    = "\033[31m"

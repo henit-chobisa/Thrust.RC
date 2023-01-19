@@ -2,11 +2,10 @@ package cmd
 
 import (
 	constants "RCTestSetup/Packages/Constants"
-	cli "RCTestSetup/tui"
 	"fmt"
-	"os"
 
-	tea "github.com/charmbracelet/bubbletea"
+	"RCTestSetup/Packages/Handlers"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -19,11 +18,36 @@ var start = &cobra.Command{
 	Args:                  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		checkConfig(args[0])
-		UIModel := tea.NewProgram(cli.New(), tea.WithAltScreen())
-		if _, err := UIModel.Run(); err != nil {
-			fmt.Printf("Alas, there's been an error: %v", err)
-			os.Exit(1)
+
+		err := Handlers.HandleDependencyCheck()
+		if err != nil {
+			return err
 		}
+
+		imagesToPull, err := Handlers.HandlePullingImages()
+
+		if err != nil {
+			return err
+		}
+
+		if len(imagesToPull) != 0 {
+			err = Handlers.PullImages(imagesToPull)
+			if err != nil {
+				return err
+			}
+
+			verifyimagesToPull, err := Handlers.HandlePullingImages()
+
+			if err != nil {
+				return err
+			}
+			if len(verifyimagesToPull) != 0 {
+				fmt.Println(constants.Red + "\nLooks like there is some issue in pulling the images, not all the images are pulled, Verification Failed\n" + constants.White)
+				return nil
+			}
+		}
+
+		// reverify if all the images are pulled or not
 
 		return nil
 	},

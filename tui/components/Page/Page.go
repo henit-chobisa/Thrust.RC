@@ -12,7 +12,7 @@ import (
 type Task struct {
 	title       string
 	description string
-	model       tea.Model
+	model       PageModel
 	Output      string
 }
 
@@ -43,15 +43,15 @@ func startLoading() tea.Msg {
 	return LoadingStart(1)
 }
 
-type LoadingStop int
+// type LoadingStop int
 
-func stopLoading() tea.Msg {
-	return LoadingStop(1)
-}
+// func stopLoading() tea.Msg {
+// 	return LoadingStop(1)
+// }
 
-func (m *Model) ExecuteList() tea.Msg {
-	return LoadingStart(1)
-}
+// func (m *Model) ExecuteList() tea.Msg {
+// 	return LoadingStart(1)
+// }
 
 func (m *Model) initTasks(width int, height int) {
 
@@ -68,37 +68,37 @@ func (m *Model) initTasks(width int, height int) {
 		Task{
 			title:       enums.Check_Initial_Configuration.String(),
 			description: "Confirm compatibility version and dependencies.",
-			model:       DependencyModel{},
+			model:       NewDependencyModel(),
 			Output:      "",
 		},
 		Task{
 			title:       enums.Pull_Containers.String(),
 			description: "Pull containers needy for running the companion, rocket.chat, companion env.",
-			model:       DependencyModel{},
+			model:       NewDependencyModel(),
 			Output:      "",
 		},
 		Task{
 			title:       enums.Run_containers.String(),
 			description: "Pull containers needy for running the companion, rocket.chat, companion env.",
-			model:       DependencyModel{},
+			model:       NewDependencyModel(),
 			Output:      "",
 		},
 		Task{
 			title:       enums.Setup_Project_Environment.String(),
 			description: "Pull containers needy for running the companion, rocket.chat, companion env.",
-			model:       DependencyModel{},
+			model:       NewDependencyModel(),
 			Output:      "",
 		},
 		Task{
 			title:       enums.Setup_Project_Environment.String(),
 			description: "Pull containers needy for running the companion, rocket.chat, companion env.",
-			model:       DependencyModel{},
+			model:       NewDependencyModel(),
 			Output:      "",
 		},
 		Task{
 			title:       enums.Show_Companion_Logs.String(),
 			description: "Pull containers needy for running the companion, rocket.chat, companion env.",
-			model:       DependencyModel{},
+			model:       NewDependencyModel(),
 			Output:      "",
 		},
 	})
@@ -112,7 +112,7 @@ func New() *Model {
 }
 
 func (m *Model) Init() tea.Cmd {
-	return m.ExecuteList
+	return tea.Sequence()
 }
 
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
