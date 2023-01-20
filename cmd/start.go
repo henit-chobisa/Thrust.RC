@@ -47,6 +47,25 @@ var start = &cobra.Command{
 			}
 		}
 
+		containersToStart, _, err := Handlers.CheckRequiredContainers()
+
+		if err != nil {
+			return err
+		}
+
+		_, startRocketChat := containersToStart[constants.RocketChatImage]
+		_, startMongoDb := containersToStart[constants.MongoDBImage]
+
+		if startMongoDb || startRocketChat {
+			err = Handlers.StartContainersWithDefaultNetwork(containersToStart)
+		}
+
+		if err != nil {
+			return err
+		}
+
+		err = Handlers.CreateAdminUser()
+
 		// reverify if all the images are pulled or not
 
 		return nil
