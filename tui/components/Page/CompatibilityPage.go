@@ -1,7 +1,7 @@
 package Page
 
 import (
-	"RCTestSetup/Packages/DockerSDK"
+	"AppsCompanion/Packages/DockerSDK"
 	"fmt"
 
 	tea "github.com/charmbracelet/bubbletea"

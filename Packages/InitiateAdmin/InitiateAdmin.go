@@ -1,8 +1,8 @@
 package initiateadmin
 
 import (
-	constants "RCTestSetup/Packages/Constants"
-	"RCTestSetup/Utils"
+	constants "AppsCompanion/Packages/Constants"
+	"AppsCompanion/Utils"
 	"bytes"
 	"encoding/json"
 	"fmt"

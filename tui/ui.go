@@ -1,10 +1,10 @@
 package tui
 
 import (
-	"RCTestSetup/tui/components/Page"
-	"RCTestSetup/tui/components/footer"
-	"RCTestSetup/tui/components/header"
-	"RCTestSetup/tui/theme"
+	"AppsCompanion/tui/components/Page"
+	"AppsCompanion/tui/components/footer"
+	"AppsCompanion/tui/components/header"
+	"AppsCompanion/tui/theme"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"

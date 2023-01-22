@@ -1,12 +1,12 @@
 package Handlers
 
 import (
-	constants "RCTestSetup/Packages/Constants"
-	"RCTestSetup/Packages/DockerSDK"
-	"RCTestSetup/Packages/DockerSDK/DefaultContainers"
-	initiateadmin "RCTestSetup/Packages/InitiateAdmin"
-	"RCTestSetup/Utils"
-	"RCTestSetup/tui/components/Page"
+	constants "AppsCompanion/Packages/Constants"
+	"AppsCompanion/Packages/DockerSDK"
+	"AppsCompanion/Packages/DockerSDK/DefaultContainers"
+	initiateadmin "AppsCompanion/Packages/InitiateAdmin"
+	"AppsCompanion/Utils"
+	"AppsCompanion/tui/components/Page"
 	"context"
 	"fmt"
 	"io"

@@ -1,7 +1,7 @@
 package tui
 
 import (
-	"RCTestSetup/Utils"
+	"AppsCompanion/Utils"
 	"fmt"
 	"math/rand"
 	"strings"

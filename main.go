@@ -1,7 +1,7 @@
 package main
 
 import (
-	"RCTestSetup/cmd"
+	"AppsCompanion/cmd"
 )
 
 func main() {

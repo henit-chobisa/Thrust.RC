@@ -1,8 +1,8 @@
 package Page
 
 import (
-	"RCTestSetup/enums"
-	"RCTestSetup/tui/theme"
+	"AppsCompanion/enums"
+	"AppsCompanion/tui/theme"
 
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"

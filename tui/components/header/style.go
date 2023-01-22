@@ -1,7 +1,7 @@
 package header
 
 import (
-	"RCTestSetup/tui/theme"
+	"AppsCompanion/tui/theme"
 
 	"github.com/charmbracelet/lipgloss"
 )

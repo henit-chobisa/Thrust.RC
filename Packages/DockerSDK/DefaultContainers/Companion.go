@@ -1,9 +1,9 @@
 package DefaultContainers
 
 import (
-	constants "RCTestSetup/Packages/Constants"
-	"RCTestSetup/Packages/DockerSDK"
-	"RCTestSetup/Utils"
+	constants "AppsCompanion/Packages/Constants"
+	"AppsCompanion/Packages/DockerSDK"
+	"AppsCompanion/Utils"
 	"fmt"
 )
 

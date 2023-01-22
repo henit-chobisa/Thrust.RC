@@ -1,8 +1,8 @@
 package tui
 
 import (
-	"RCTestSetup/Utils"
-	"RCTestSetup/enums"
+	"AppsCompanion/Utils"
+	"AppsCompanion/enums"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

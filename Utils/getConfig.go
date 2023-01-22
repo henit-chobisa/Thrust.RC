@@ -1,7 +1,7 @@
 package Utils
 
 import (
-	"RCTestSetup/enums"
+	"AppsCompanion/enums"
 	"github.com/spf13/viper"
 )
 

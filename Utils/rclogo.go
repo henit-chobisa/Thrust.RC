@@ -1,7 +1,7 @@
 package Utils
 
 import (
-	constants "RCTestSetup/Packages/Constants"
+	constants "AppsCompanion/Packages/Constants"
 
 	"github.com/common-nighthawk/go-figure"
 )

@@ -1,12 +1,12 @@
 package cmd
 
 import (
-	constants "RCTestSetup/Packages/Constants"
+	constants "AppsCompanion/Packages/Constants"
 	"fmt"
 	"os"
 	"path/filepath"
 
-	"RCTestSetup/Packages/Handlers"
+	"AppsCompanion/Packages/Handlers"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"

@@ -1,7 +1,7 @@
 package Page
 
 import (
-	"RCTestSetup/tui/theme"
+	"AppsCompanion/tui/theme"
 
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/lipgloss"
