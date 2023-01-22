@@ -23,7 +23,7 @@ var stopCommand = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(stopCommand)
+	// rootCmd.AddCommand(stopCommand)
 	initStopFlags()
 }
 
