@@ -132,23 +132,24 @@ func (d *Docker) CreateNetwork() (string, error) {
 	return response.ID, nil
 }
 
-func (d *Docker) CreateContainer(networkId string, name string, image string, portExpose nat.PortSet, portBindings nat.PortMap, env []string, volumes map[string]struct{}, binds []string, aliases []string, links []string, mounts []mount.Mount) (containerID string, err error) {
+func (d *Docker) CreateContainer(networkId string, name string, image string, portExpose nat.PortSet, portBindings nat.PortMap, env []string, volumes map[string]struct{}, binds []string, aliases []string, links []string, mounts []mount.Mount, showLogs bool, commands []string, stdout bool) (containerID string, err error) {
 
-	container, err := d.Client.ContainerCreate(context.TODO(), &container.Config{
+	cont, err := d.Client.ContainerCreate(context.TODO(), &container.Config{
 		Image:        image,
-		AttachStdout: false,
+		Cmd:          commands,
+		AttachStdout: stdout,
 		ExposedPorts: portExpose,
 		Env:          env,
 		Volumes:      volumes,
 	}, &container.HostConfig{
-		// AutoRemove:   true,
+		AutoRemove:   true,
 		Binds:        binds,
 		Mounts:       mounts,
 		PortBindings: portBindings,
-		RestartPolicy: container.RestartPolicy{
-			Name:              "on-failure",
-			MaximumRetryCount: 5,
-		},
+		// RestartPolicy: container.RestartPolicy{
+		// 	Name:              "on-failure",
+		// 	MaximumRetryCount: 5,
+		// },
 		Links:       links,
 		NetworkMode: "bridge",
 	}, &network.NetworkingConfig{
@@ -163,16 +164,24 @@ func (d *Docker) CreateContainer(networkId string, name string, image string, po
 		return "", err
 	}
 
-	err = d.Client.NetworkConnect(context.TODO(), networkId, container.ID, nil)
+	err = d.Client.NetworkConnect(context.TODO(), networkId, cont.ID, nil)
 
 	if err != nil {
 		fmt.Println("Network Connection Error")
 		return "", err
 	}
 
-	if err := d.Client.ContainerStart(context.TODO(), container.ID, types.ContainerStartOptions{}); err != nil {
+	if err := d.Client.ContainerStart(context.TODO(), cont.ID, types.ContainerStartOptions{}); err != nil {
 		fmt.Println("Container Start Error")
 		return "", err
+	}
+
+	if showLogs {
+		out, err := d.Client.ContainerLogs(context.Background(), cont.ID, types.ContainerLogsOptions{ShowStdout: true, Follow: true})
+		if err != nil {
+			return "", err
+		}
+		io.Copy(os.Stdout, out)
 	}
 
 	return containerID, err
