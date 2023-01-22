@@ -47,7 +47,7 @@ var start = &cobra.Command{
 			}
 		}
 
-		containersToStart, _, err := Handlers.CheckRequiredContainers()
+		containersToStart, startCompanion, err := Handlers.CheckRequiredContainers()
 
 		if err != nil {
 			return err
@@ -67,6 +67,13 @@ var start = &cobra.Command{
 		err = Handlers.CreateAdminUser()
 
 		// reverify if all the images are pulled or not
+
+		if startCompanion {
+			err := Handlers.StartCompanionContainer()
+			if err != nil {
+				return err
+			}
+		}
 
 		return nil
 	},

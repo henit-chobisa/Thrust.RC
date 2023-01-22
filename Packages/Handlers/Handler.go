@@ -193,3 +193,28 @@ func CreateAdminUser() error {
 
 	return nil
 }
+
+func StartCompanionContainer() error {
+
+	fmt.Printf(constants.Blue + "\n🐳 Starting Required Containers for Companion\n\n" + constants.White)
+
+	defaultNetworkId, err := createDefaultNetwork()
+
+	if err != nil {
+		return err
+	}
+
+	client, err := DockerSDK.GetNewClient()
+
+	if err != nil {
+		return err
+	}
+
+	_, err = DefaultContainers.LaunchCompanionContainer(*client, defaultNetworkId)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
