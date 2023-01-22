@@ -3,12 +3,13 @@ package DefaultContainers
 import (
 	constants "RCTestSetup/Packages/Constants"
 	"RCTestSetup/Packages/DockerSDK"
+	"RCTestSetup/Utils"
 
 	"github.com/docker/go-connections/nat"
 )
 
 func LaunchRocketChatContainer(sdk DockerSDK.Docker, networkID string) (string, error) {
-	containerID, err := sdk.CreateContainer(networkID, "rocketchat", constants.RocketChatImage, nat.PortSet{
+	containerID, err := sdk.CreateContainer(networkID, "rocketchat_"+Utils.RandomString(5), constants.RocketChatImage, nat.PortSet{
 		"3000/tcp": {},
 	}, nat.PortMap{
 		"3000/tcp": []nat.PortBinding{
@@ -27,7 +28,7 @@ func LaunchRocketChatContainer(sdk DockerSDK.Docker, networkID string) (string, 
 		"OVERWRITE_SETTING_Show_Setup_Wizard=Completed",
 	}, nil, nil, []string{
 		"rocketchat",
-	}, nil, nil)
+	}, nil, nil, false, nil, false)
 
 	return containerID, err
 }

@@ -3,6 +3,7 @@ package DefaultContainers
 import (
 	constants "RCTestSetup/Packages/Constants"
 	"RCTestSetup/Packages/DockerSDK"
+	"RCTestSetup/Utils"
 
 	"github.com/docker/go-connections/nat"
 )
@@ -10,7 +11,7 @@ import (
 func LaunchMongoDbContainer(sdk DockerSDK.Docker, networkID string) (string, error) {
 	constainerID, err := sdk.CreateContainer(
 		networkID,
-		"mongodb",
+		"mongodb_"+Utils.RandomString(5),
 		constants.MongoDBImage,
 		nat.PortSet{
 			"27017/tcp": {},
@@ -36,6 +37,9 @@ func LaunchMongoDbContainer(sdk DockerSDK.Docker, networkID string) (string, err
 		},
 		nil,
 		nil,
+		false,
+		nil,
+		false,
 	)
 
 	return constainerID, err
