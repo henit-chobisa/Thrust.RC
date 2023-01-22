@@ -8,21 +8,24 @@ On launch it sets up everything which you would need and launches an RC Server a
 
 # Prerequisites
 - Docker in running state, that's it.
+- docker-compose V2
+- npm with global previledges 
+Have a look once of [this](https://henitchobisa.notion.site/Setting-up-App-s-Companion-in-EC2-fdde72b19afc40ed93c9ded5887a641c), it will help you check your configurations.
 
 # How to use it ?
 - Start Docker
-- Ensure docker-compose inside your system
-- Get Node.js and NPM Installed
+- Ensure docker-compose V2 is present inside your system has admin previledges, docker-compose v1 won't be able to handle the docker-compose file and will throw errors.
+- Get Node.js and NPM Installed and has admin previledges, as the companion deals with global installations. [Check this out](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
- wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v0.1.1/AppsCompanion
- chmod +x RC_AppTestCompanion
+ wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v0.1.1/AppsCompanion_linux
+ chmod +x AppsCompanion_linux
 ```
 - Now execute the binary in your shell 
 ```sh
-./RC_AppTestCompanion
+./AppsCompanion_linux
 ```
-That's it sit back & relax!
+Use mac binary if you're a mac user, That's it sit back & relax!
 
 # How it looks like ?
 The execution takes place in `3 Phases` and once the app detects your `app.json` it will show your app name, below Rocket.Chat, you can see the logs on the completion of each step.
@@ -53,6 +56,15 @@ In the end when every thing would be completed, you can open your `http://localh
 - If you want to override the configuration of the companion, make a `config.json` file in the same directory as the binary.
 - The above is the default configuration used by the companion.
 - Hot-Reloading in the companion is dependent upon watcher and watcher mode, watcher looks for the file changes in the directory and performs hot-reloading for your apps.
+
+## Using on EC2 Instance
+Please have a look on this [short manual](https://henitchobisa.notion.site/Setting-up-App-s-Companion-in-EC2-fdde72b19afc40ed93c9ded5887a641c) for end to end configuration of your ec2 with Apps' conpanion.
+
+### debugging
+- Docker-Compose "executable file not found in $PATH"
+```
+sudo chmod +x /usr/local/bin/docker-compose
+```
 
 
 ### Made with ♥️ for [Rocket.Chat Apps](https://www.rocket.chat) by [Henit Chobisa](https://twitter.com/henit_chobisa)
