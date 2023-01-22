@@ -12,7 +12,6 @@ services:
       traefik.http.routers.rocketchat.entrypoints: https
       traefik.http.routers.rocketchat.tls.certresolver: le
     environment:
-      OVERWRITE_SETTING_github-app-oauth-client-id: "okokokkk"
       OVERWRITE_SETTING_Apps_Framework_Development_Mode: "true"
       OVERWRITE_SETTING_Show_Setup_Wizard: "Completed"
       MONGO_URL: "${MONGO_URL:-\
