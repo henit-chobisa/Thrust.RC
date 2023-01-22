@@ -11,7 +11,7 @@ const (
 const (
 	RocketChatImage = "registry.rocket.chat/rocketchat/rocket.chat:latest"
 	MongoDBImage    = "bitnami/mongodb:4.4"
-	CompanionImage  = "henit0885/rcapps-companion-env:1.0.0"
+	CompanionImage  = "henit0885/rcapps-companion-env:1.1.0"
 )
 
 // Colors
