@@ -7,10 +7,14 @@ import (
 	initiateadmin "RCTestSetup/Packages/InitiateAdmin"
 	"RCTestSetup/Utils"
 	"RCTestSetup/tui/components/Page"
+	"context"
 	"fmt"
+	"io"
+	"os"
 	"sync"
 	"time"
 
+	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 )
 
@@ -92,11 +96,11 @@ func PullImages(images map[string]string) error {
 	return nil
 }
 
-func CheckRequiredContainers() (containersToStart map[string]string, companionStart bool, err error) {
+func CheckRequiredContainers() (containersToStart map[string]string, companionStart bool, companionID string, err error) {
 	fmt.Printf(constants.Blue + "\n🐳 Finding Running Containers\n\n" + constants.White)
 	client, err := DockerSDK.GetNewClient()
 	if err != nil {
-		return nil, false, err
+		return nil, false, "", err
 	}
 
 	filter := filters.NewArgs()
@@ -110,14 +114,18 @@ func CheckRequiredContainers() (containersToStart map[string]string, companionSt
 	containers, err := client.FindContainers(filter)
 
 	if err != nil {
-		return nil, false, err
+		return nil, false, "", err
 	}
 
 	containersToStart = map[string]string{constants.RocketChatImage: "Rocket.Chat", constants.MongoDBImage: "MongoDB", constants.CompanionImage: "Apps.Companion"}
 
 	companionStart = false
+
 	for _, container := range *containers {
 		fmt.Println(Utils.Tick() + containersToStart[container.Image] + " : " + container.ID + " : " + container.Names[0] + " : " + container.Image + " : " + container.Status)
+		if container.Image == constants.CompanionImage {
+			companionID = container.ID
+		}
 		delete(containersToStart, container.Image)
 	}
 
@@ -128,7 +136,7 @@ func CheckRequiredContainers() (containersToStart map[string]string, companionSt
 		fmt.Println(Utils.Cross() + value + " : " + key)
 	}
 
-	return containersToStart, companionStart, nil
+	return containersToStart, companionStart, companionID, nil
 }
 
 func createDefaultNetwork() (id string, err error) {
@@ -194,7 +202,7 @@ func CreateAdminUser() error {
 	return nil
 }
 
-func StartCompanionContainer() error {
+func StartCompanionContainer(appDir string) error {
 
 	fmt.Printf(constants.Blue + "\n🐳 Starting Required Containers for Companion\n\n" + constants.White)
 
@@ -210,11 +218,22 @@ func StartCompanionContainer() error {
 		return err
 	}
 
-	_, err = DefaultContainers.LaunchCompanionContainer(*client, defaultNetworkId)
+	_, err = DefaultContainers.LaunchCompanionContainer(*client, defaultNetworkId, appDir)
 
 	if err != nil {
 		return err
 	}
 
+	return nil
+}
+
+func ShowLogs(containerID string) error {
+	client, _ := DockerSDK.GetNewClient()
+
+	out, err := client.Client.ContainerLogs(context.Background(), containerID, types.ContainerLogsOptions{ShowStdout: true, Follow: true})
+	if err != nil {
+		return err
+	}
+	io.Copy(os.Stdout, out)
 	return nil
 }

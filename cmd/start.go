@@ -3,6 +3,8 @@ package cmd
 import (
 	constants "RCTestSetup/Packages/Constants"
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"RCTestSetup/Packages/Handlers"
 
@@ -19,7 +21,20 @@ var start = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		checkConfig(args[0])
 
-		err := Handlers.HandleDependencyCheck()
+		path, err := filepath.Abs(args[0])
+
+		isAppJsonPresent := checkAppsJsonFile(path)
+
+		if !isAppJsonPresent {
+			fmt.Println(constants.Red + "`app.json` file not found in the given directory " + path + "\n Please consider rechecking and try again.")
+			return nil
+		}
+
+		if err != nil {
+			return err
+		}
+
+		err = Handlers.HandleDependencyCheck()
 		if err != nil {
 			return err
 		}
@@ -47,7 +62,7 @@ var start = &cobra.Command{
 			}
 		}
 
-		containersToStart, startCompanion, err := Handlers.CheckRequiredContainers()
+		containersToStart, startCompanion, companionID, err := Handlers.CheckRequiredContainers()
 
 		if err != nil {
 			return err
@@ -64,15 +79,15 @@ var start = &cobra.Command{
 			return err
 		}
 
-		err = Handlers.CreateAdminUser()
-
-		// reverify if all the images are pulled or not
+		Handlers.CreateAdminUser()
 
 		if startCompanion {
-			err := Handlers.StartCompanionContainer()
+			err := Handlers.StartCompanionContainer(path)
 			if err != nil {
 				return err
 			}
+		} else {
+			Handlers.ShowLogs(companionID)
 		}
 
 		return nil
@@ -97,6 +112,15 @@ func initStartFlags() {
 	start.Flags().String("composefilepath", "./", constants.Blue+"docker-compose file path, if you want any additional containers to start along with the environment"+constants.White)
 
 	bindWithFlags()
+}
+
+func checkAppsJsonFile(path string) bool {
+
+	if _, err := os.Stat(path + "/app.json"); err == nil {
+		return true
+	} else {
+		return false
+	}
 }
 
 func checkConfig(appDir string) {
