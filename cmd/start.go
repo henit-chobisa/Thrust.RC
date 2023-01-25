@@ -63,7 +63,7 @@ var start = &cobra.Command{
 			}
 		}
 
-		containersToStart, startCompanion, companionID, err := Handlers.CheckRequiredContainers()
+		containersToStart, startCompanion, companionID, err := Handlers.CheckRequiredContainers(appInfo)
 
 		if err != nil {
 			return err
@@ -82,8 +82,10 @@ var start = &cobra.Command{
 
 		Handlers.CreateAdminUser()
 
+		fmt.Println(startCompanion)
+
 		if startCompanion {
-			err := Handlers.StartCompanionContainer(path)
+			err := Handlers.StartCompanionContainer(path, appInfo)
 			if err != nil {
 				return err
 			}
