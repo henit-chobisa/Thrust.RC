@@ -2,6 +2,7 @@ package cmd
 
 import (
 	constants "AppsCompanion/Packages/Constants"
+	models "AppsCompanion/Packages/Models"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -23,9 +24,9 @@ var start = &cobra.Command{
 
 		path, err := filepath.Abs(args[0])
 
-		isAppJsonPresent := checkAppsJsonFile(path)
+		appInfo, err := getAppInfo(path)
 
-		if !isAppJsonPresent {
+		if err != nil {
 			fmt.Println(constants.Red + "`app.json` file not found in the given directory " + path + "\n Please consider rechecking and try again.")
 			return nil
 		}
@@ -62,7 +63,7 @@ var start = &cobra.Command{
 			}
 		}
 
-		containersToStart, startCompanion, companionID, err := Handlers.CheckRequiredContainers()
+		containersToStart, startCompanion, companionID, err := Handlers.CheckRequiredContainers(appInfo)
 
 		if err != nil {
 			return err
@@ -81,8 +82,10 @@ var start = &cobra.Command{
 
 		Handlers.CreateAdminUser()
 
+		fmt.Println(startCompanion)
+
 		if startCompanion {
-			err := Handlers.StartCompanionContainer(path)
+			err := Handlers.StartCompanionContainer(path, appInfo)
 			if err != nil {
 				return err
 			}
@@ -114,12 +117,12 @@ func initStartFlags() {
 	bindWithFlags()
 }
 
-func checkAppsJsonFile(path string) bool {
-
+func getAppInfo(path string) (appInfo *models.AppInfo, err error) {
 	if _, err := os.Stat(path + "/app.json"); err == nil {
-		return true
+		appInfo, err = appInfo.New(path + "/app.json")
+		return appInfo, err
 	} else {
-		return false
+		return nil, err
 	}
 }
 
