@@ -142,14 +142,14 @@ func (d *Docker) CreateContainer(networkId string, name string, image string, po
 		Env:          env,
 		Volumes:      volumes,
 	}, &container.HostConfig{
-		AutoRemove:   true,
+		// AutoRemove:   true,
 		Binds:        binds,
 		Mounts:       mounts,
 		PortBindings: portBindings,
-		// RestartPolicy: container.RestartPolicy{
-		// 	Name:              "on-failure",
-		// 	MaximumRetryCount: 5,
-		// },
+		RestartPolicy: container.RestartPolicy{
+			Name:              "on-failure",
+			MaximumRetryCount: 2,
+		},
 		Links:       links,
 		NetworkMode: "bridge",
 	}, &network.NetworkingConfig{
