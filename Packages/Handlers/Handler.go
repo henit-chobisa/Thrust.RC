@@ -5,12 +5,14 @@ import (
 	"AppsCompanion/Packages/DockerSDK"
 	"AppsCompanion/Packages/DockerSDK/DefaultContainers"
 	initiateadmin "AppsCompanion/Packages/InitiateAdmin"
+	models "AppsCompanion/Packages/Models"
 	"AppsCompanion/Utils"
 	"AppsCompanion/tui/components/Page"
 	"context"
 	"fmt"
 	"io"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -96,7 +98,7 @@ func PullImages(images map[string]string) error {
 	return nil
 }
 
-func CheckRequiredContainers() (containersToStart map[string]string, companionStart bool, companionID string, err error) {
+func CheckRequiredContainers(app *models.AppInfo) (containersToStart map[string]string, companionStart bool, companionID string, err error) {
 	fmt.Printf(constants.Blue + "\n🐳 Finding Running Containers\n\n" + constants.White)
 	client, err := DockerSDK.GetNewClient()
 	if err != nil {
@@ -119,14 +121,24 @@ func CheckRequiredContainers() (containersToStart map[string]string, companionSt
 
 	containersToStart = map[string]string{constants.RocketChatImage: "Rocket.Chat", constants.MongoDBImage: "MongoDB", constants.CompanionImage: "Apps.Companion"}
 
+	companionName := "/companion_" + app.Name + app.Id + app.Version
+
 	companionStart = false
 
 	for _, container := range *containers {
-		fmt.Println(Utils.Tick() + containersToStart[container.Image] + " : " + container.ID + " : " + container.Names[0] + " : " + container.Image + " : " + container.Status)
-		if container.Image == constants.CompanionImage {
-			companionID = container.ID
+		if !strings.HasPrefix(container.Names[0], companionName) {
+			continue
+		} else {
+			fmt.Println(Utils.Tick() + containersToStart[container.Image] + " : " + container.ID + " : " + container.Names[0] + " : " + container.Image + " : " + container.Status)
+
+			if container.Image == constants.CompanionImage {
+				companionID = container.ID
+			}
+
+			if len(containersToStart) > 0 {
+				delete(containersToStart, container.Image)
+			}
 		}
-		delete(containersToStart, container.Image)
 	}
 
 	for key, value := range containersToStart {
@@ -202,7 +214,7 @@ func CreateAdminUser() error {
 	return nil
 }
 
-func StartCompanionContainer(appDir string) error {
+func StartCompanionContainer(appDir string, app *models.AppInfo) error {
 
 	fmt.Printf(constants.Blue + "\n🐳 Starting Required Containers for Companion\n\n" + constants.White)
 
@@ -218,7 +230,9 @@ func StartCompanionContainer(appDir string) error {
 		return err
 	}
 
-	_, err = DefaultContainers.LaunchCompanionContainer(*client, defaultNetworkId, appDir)
+	companionName := "companion_" + app.Name + app.Id + app.Version
+
+	_, err = DefaultContainers.LaunchCompanionContainer(*client, defaultNetworkId, appDir, companionName)
 
 	if err != nil {
 		return err
