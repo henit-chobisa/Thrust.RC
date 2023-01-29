@@ -1,61 +1,59 @@
-# Test Companion for Rocket.Chat Apps
 
-Are you a Rocket.Chat App Developer? 
+<p align="center">
+  <a href="https://www.gitpod.io">
+    <img src="https://user-images.githubusercontent.com/72302948/215353380-af7a74e4-e3cc-446c-b853-d1c12bc275ef.png" alt="Thrust Logo" height="250" />
+    <br />
+    <strong>Thrust</strong>
+  </a>
+  <br />
+  <span>Test Companion for Rocket.Chat Apps</span>
+</p>
 
-Stop! configuring your workspace everytime you wanna test Rocket.Chat Apps and waste the initial 20 mins of yours.
-This App does all that work for you, just place the binary in your directory and execute it.
-On launch it sets up everything which you would need and launches an RC Server and installs the app in that for you to test.
+Stop configuring your workspace everytime you wanna test Rocket.Chat Apps and waste the initial 20 mins of yours.
+Let thrust handle it, Thrust downloads manages and runs container based on Rocket.Chat and Rocket.Chat apps, and sets up your Rocket.Chat App workspace under 1 minute,just place the binary in your directory and execute it.
+On launch it sets up everything which you would need and launches an RC Server and installs the app in that for you to test, making your life wayyyy easier that before.
 
 # Prerequisites
 - Docker in running state, that's it.
-- docker-compose V2
-- npm with global previledges 
-Have a look once of [this](https://henitchobisa.notion.site/Setting-up-App-s-Companion-in-EC2-fdde72b19afc40ed93c9ded5887a641c), it will help you check your configurations.
+- No need to even do `npm install`, thrust will take care of that
 
 # How to use it ?
 - Start Docker
-- Ensure docker-compose V2 is present inside your system has admin previledges, docker-compose v1 won't be able to handle the docker-compose file and will throw errors.
-- Get Node.js and NPM Installed and has admin previledges, as the companion deals with global installations. [Check this out](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
- wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v0.1.1/AppsCompanion_linux
+ wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v2.0.1/AppsCompanion_linux
  chmod +x AppsCompanion_linux
 ```
 - Now execute the binary in your shell 
 ```sh
-./AppsCompanion_linux
+./AppsCompanion_linux start <path to your app directory>
+
+# ./AppsCompanion_linux start ./
 ```
 Use mac binary if you're a mac user, That's it sit back & relax!
 
-# How it looks like ?
-The execution takes place in `3 Phases` and once the app detects your `app.json` it will show your app name, below Rocket.Chat, you can see the logs on the completion of each step.
-<img width="1166" alt="image" src="https://user-images.githubusercontent.com/72302948/211493665-55ccb522-29ea-4e23-9eba-0596a52c6060.png">
+<img align="right" width="400" alt="image" src="https://user-images.githubusercontent.com/72302948/215354509-722bd660-7a87-4dbc-afee-f243b7f36ee0.png">
 
-# What would be the end result ?
-In the end when every thing would be completed, you can open your `http://localhost:3000`, login with the `username` and `password` provided in the `config.json` file and get inside the workspace without have to configure any organization and cloud.
-<img width="993" alt="image" src="https://user-images.githubusercontent.com/72302948/211494438-f0dcab91-4ab8-4e07-b615-f7756b465a37.png">
-![DemoCompanion](https://user-images.githubusercontent.com/72302948/211494912-abb1a8b4-dee2-4036-adef-3d7f1f7b4b04.gif)
+## How it looks like ?
+The execution will confirm the necessary assets which will be needed to run the apps companion, such as
+- Docker running or not
+- Are all the initial dependencies full filled
+- What images are present in the system and what to pull, it will pull the required images automatically don't worry
 
-## Additional Configuration
+<img align="left" width="400" alt="image" src="https://user-images.githubusercontent.com/72302948/215354665-7b54dbde-2140-46ab-a6d2-e5a4d3be9a4f.png">
 
-```json
-{
-    "admin" : {             // Admin user info used for starting rocket.chat server
-      "username": "user0",
-      "email": "a@b.com",
-      "pass": "123456",
-      "name": "user"
-    },
-    "appDir" : "./", // path to your app directory
-    "composeFilePath" : "./docker-compose.yml", // docker-compose file that you want to use, companion automatically downloads it, if you won't give.
-    "installDependencies" : "false", // Installs the dependencies of your app, using npm install
-    "watcher" : "true",
-    "watcherMode" : "appDir-deep" // this means that the watcher will look at changes for all the files and folders and folder changes, while you can use the "appdir-shallow" option which will only look for for only files in appDir, won't look for subdirectories.
-}
-```
-- If you want to override the configuration of the companion, make a `config.json` file in the same directory as the binary.
-- The above is the default configuration used by the companion.
-- Hot-Reloading in the companion is dependent upon watcher and watcher mode, watcher looks for the file changes in the directory and performs hot-reloading for your apps.
+Next it will start necessary containers such as Rocket.Chat and mongodb using `dockerd` and wait until the container are fully started, it won't start a new container everytime you start, it will look for the running container and just create the ones which are not present.
+Along with that, it also creates an admin user for the initialised Rocket.Chat Server, which will later be helpful for installing the apps inside, you will soon have an option to configure everything manually with some flags and yaml files.
+
+<br/>
+
+<img align="right" width="400" alt="image" src="https://user-images.githubusercontent.com/72302948/215354929-fe6266da-d90a-4b89-adaf-37f37922ba81.png">
+
+## What would be the end result ?
+In the end you can see the companion container's logs, which will show you two of the essential things, 
+- Node Module Installation, which is done inside the container only, so you can expect a frest install everytime.
+- Rocket.Chat CLI logs
+
 
 ## Using on EC2 Instance
 Please have a look on this [short manual](https://henitchobisa.notion.site/Setting-up-App-s-Companion-in-EC2-fdde72b19afc40ed93c9ded5887a641c) for end to end configuration of your ec2 with Apps' conpanion.
@@ -63,11 +61,13 @@ Please have a look on this [short manual](https://henitchobisa.notion.site/Setti
 ### debugging
 - Docker-Compose "executable file not found in $PATH"
 ```
-sudo chmod +x /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker
 ```
-
-
-### Made with ♥️ for [Rocket.Chat Apps](https://www.rocket.chat) by [Henit Chobisa](https://twitter.com/henit_chobisa)
+<p align="center">
+ <img width="400" alt="Icon - Red" src="https://user-images.githubusercontent.com/72302948/215355019-2779af9c-14bb-453c-a56a-b60156390916.png">
+ <br />
+    <strong>Made with ♥️ for Rocket.Chat Apps by Henit.Chobisa</strong>
+</p>
 
 ## Note
 If you find any bug please open an issue, your contributions would be appreciated.
