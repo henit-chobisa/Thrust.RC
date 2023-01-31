@@ -13,9 +13,14 @@ Stop configuring your workspace everytime you wanna test Rocket.Chat Apps and wa
 Let thrust handle it, thrust downloads manages and runs container based on Rocket.Chat and Rocket.Chat apps, and sets up your Rocket.Chat App workspace under 1 minute,just place the binary in your directory and execute it.
 On launch it sets up everything which you would need and launches an RC Server and installs the app in that for you to test, making your life wayyyy easier that before.
 
+<br>
+
 # Prerequisites
 - Docker in running state, that's it.
 - No need to even do `npm install`, thrust will take care of that
+
+<br>
+<br>
 
 # How to use it ?
 - Start Docker
@@ -43,21 +48,29 @@ The execution will confirm the necessary assets which will be needed to run the 
 <br>
 <br>
 
-<img align="left" padding-left="5px" width="400" alt="image" src="https://user-images.githubusercontent.com/72302948/215354665-7b54dbde-2140-46ab-a6d2-e5a4d3be9a4f.png">
+<img align="left" width="400" alt="image" src="https://user-images.githubusercontent.com/72302948/215354665-7b54dbde-2140-46ab-a6d2-e5a4d3be9a4f.png">
 
 <br>
 
 Next it will start necessary containers such as Rocket.Chat and mongodb using `dockerd` and wait until the container are fully started, it won't start a new container everytime you start, it will look for the running container and just create the ones which are not present.
 Along with that, it also creates an admin user for the initialised Rocket.Chat Server, which will later be helpful for installing the apps inside, you will soon have an option to configure everything manually with some flags and yaml files.
 
-<br/>
-
+<br>
+<br>
 <img align="right" width="400" alt="image" src="https://user-images.githubusercontent.com/72302948/215354929-fe6266da-d90a-4b89-adaf-37f37922ba81.png">
+
+<br>
+<br>
 
 ## What would be the end result ?
 In the end you can see the companion container's logs, which will show you two of the essential things, 
 - Node Module Installation, which is done inside the container only, so you can expect a frest install everytime.
 - Rocket.Chat CLI logs
+
+
+<br>
+<br>
+<br>
 
 
 ## Using on EC2 Instance
