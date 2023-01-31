@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"os/signal"
 	"path/filepath"
 	constants "thrust/Packages/Constants"
 	models "thrust/Packages/Models"
@@ -20,6 +21,14 @@ var start = &cobra.Command{
 	DisableFlagsInUseLine: true,
 	Args:                  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+
+		c := make(chan os.Signal, 1)
+		signal.Notify(c, os.Interrupt)
+		go func() {
+			<-c
+			Handlers.Cleanup()
+			os.Exit(1)
+		}()
 
 		path, err := filepath.Abs(args[0])
 
@@ -98,6 +107,10 @@ var start = &cobra.Command{
 			Handlers.ShowLogs(companionID)
 		}
 
+		return nil
+	},
+	PostRunE: func(cmd *cobra.Command, args []string) error {
+		fmt.Println("RunE has been completed and is terminating")
 		return nil
 	},
 }

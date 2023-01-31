@@ -251,3 +251,12 @@ func ShowLogs(containerID string) error {
 	io.Copy(os.Stdout, out)
 	return nil
 }
+
+func Cleanup() {
+
+	/*
+		TODO: Find out which companion containers are running
+		TODO: If there are only 3 containers running, rc, mongo and companion, close and distroy all of those,
+		TODO: If there are more than 3 containers running, clear the companion container for the current directory and the given id
+	*/
+}
