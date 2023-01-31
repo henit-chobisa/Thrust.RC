@@ -1,10 +1,10 @@
 package DefaultContainers
 
 import (
-	constants "AppsCompanion/Packages/Constants"
-	"AppsCompanion/Packages/DockerSDK"
-	"AppsCompanion/Utils"
 	"fmt"
+	constants "thrust/Packages/Constants"
+	"thrust/Packages/DockerSDK"
+	"thrust/Utils"
 )
 
 func LaunchCompanionContainer(sdk DockerSDK.Docker, networkID string, path string, name string) (containerID string, err error) {

@@ -1,7 +1,7 @@
 package header
 
 import (
-	"AppsCompanion/tui/theme"
+	"thrust/tui/theme"
 
 	"github.com/charmbracelet/lipgloss"
 )

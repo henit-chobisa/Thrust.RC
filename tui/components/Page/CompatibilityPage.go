@@ -1,8 +1,8 @@
 package Page
 
 import (
-	"AppsCompanion/Packages/DockerSDK"
 	"fmt"
+	"thrust/Packages/DockerSDK"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"

@@ -1,9 +1,9 @@
 package DefaultContainers
 
 import (
-	constants "AppsCompanion/Packages/Constants"
-	"AppsCompanion/Packages/DockerSDK"
-	"AppsCompanion/Utils"
+	constants "thrust/Packages/Constants"
+	"thrust/Packages/DockerSDK"
+	"thrust/Utils"
 
 	"github.com/docker/go-connections/nat"
 )

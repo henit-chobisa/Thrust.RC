@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	constants "AppsCompanion/Packages/Constants"
 	"fmt"
+	constants "thrust/Packages/Constants"
 
 	"github.com/spf13/cobra"
 )

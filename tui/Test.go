@@ -1,10 +1,10 @@
 package tui
 
 import (
-	"AppsCompanion/Utils"
 	"fmt"
 	"math/rand"
 	"strings"
+	"thrust/Utils"
 	"time"
 
 	"github.com/charmbracelet/bubbles/progress"

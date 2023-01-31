@@ -1,8 +1,8 @@
 package Page
 
 import (
-	"AppsCompanion/enums"
-	"AppsCompanion/tui/theme"
+	"thrust/enums"
+	"thrust/tui/theme"
 
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"

@@ -1,8 +1,8 @@
 package tui
 
 import (
-	"AppsCompanion/Utils"
-	"AppsCompanion/enums"
+	"thrust/Utils"
+	"thrust/enums"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

@@ -1,10 +1,10 @@
 package tui
 
 import (
-	"AppsCompanion/tui/components/Page"
-	"AppsCompanion/tui/components/footer"
-	"AppsCompanion/tui/components/header"
-	"AppsCompanion/tui/theme"
+	"thrust/tui/components/Page"
+	"thrust/tui/components/footer"
+	"thrust/tui/components/header"
+	"thrust/tui/theme"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"

@@ -1,19 +1,19 @@
 package Handlers
 
 import (
-	constants "AppsCompanion/Packages/Constants"
-	"AppsCompanion/Packages/DockerSDK"
-	"AppsCompanion/Packages/DockerSDK/DefaultContainers"
-	initiateadmin "AppsCompanion/Packages/InitiateAdmin"
-	models "AppsCompanion/Packages/Models"
-	"AppsCompanion/Utils"
-	"AppsCompanion/tui/components/Page"
 	"context"
 	"fmt"
 	"io"
 	"os"
 	"strings"
 	"sync"
+	constants "thrust/Packages/Constants"
+	"thrust/Packages/DockerSDK"
+	"thrust/Packages/DockerSDK/DefaultContainers"
+	initiateadmin "thrust/Packages/InitiateAdmin"
+	models "thrust/Packages/Models"
+	"thrust/Utils"
+	"thrust/tui/components/Page"
 	"time"
 
 	"github.com/docker/docker/api/types"

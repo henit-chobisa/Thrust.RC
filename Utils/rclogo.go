@@ -1,7 +1,7 @@
 package Utils
 
 import (
-	constants "AppsCompanion/Packages/Constants"
+	constants "thrust/Packages/Constants"
 
 	"github.com/common-nighthawk/go-figure"
 )

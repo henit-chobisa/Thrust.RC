@@ -1,7 +1,7 @@
 package Page
 
 import (
-	"AppsCompanion/tui/theme"
+	"thrust/tui/theme"
 
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/lipgloss"
