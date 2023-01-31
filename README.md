@@ -1,6 +1,6 @@
 
 <p align="center">
-  <a href="https://www.gitpod.io">
+  <a href="https://www.twitter.com/henit_chobisa">
     <img src="https://user-images.githubusercontent.com/72302948/215353380-af7a74e4-e3cc-446c-b853-d1c12bc275ef.png" alt="thrust Logo" height="250" />
     <br />
     <strong>thrust</strong>
