@@ -21,8 +21,7 @@ On launch it sets up everything which you would need and launches an RC Server a
 - Start Docker
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
- wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v2.0.1/thrust_linux
- chmod +x thrust_linux
+sudo bash -c "curl -L https://github.com/henit-chobisa/Thrust.RC/releases/download/v2.0.1/AppsCompanion_linux  > /usr/bin/thrust && chmod +x /usr/bin/thrust"
 ```
 - Now execute the binary in your shell 
 ```sh
