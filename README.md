@@ -3,7 +3,7 @@
   <a href="https://www.twitter.com/henit_chobisa">
     <img src="https://user-images.githubusercontent.com/72302948/215353380-af7a74e4-e3cc-446c-b853-d1c12bc275ef.png" alt="thrust Logo" height="250" />
     <br />
-    <strong>thrust</strong>
+    <strong>Thrust</strong>
   </a>
   <br />
   <span>Test Companion for Rocket.Chat Apps</span>
@@ -25,9 +25,10 @@ sudo bash -c "curl -L https://github.com/henit-chobisa/Thrust.RC/releases/downlo
 ```
 - Now execute the binary in your shell 
 ```sh
-./thrust_linux start <path to your app directory>
+thrust start <path to your app directory>
 
-# ./thrust_linux start ./
+thrust start ./
+# to start thrust in your current directory
 ```
 Use mac binary if you're a mac user, That's it sit back & relax!
 
@@ -39,7 +40,12 @@ The execution will confirm the necessary assets which will be needed to run the 
 - Are all the initial dependencies full filled
 - What images are present in the system and what to pull, it will pull the required images automatically don't worry
 
-<img align="left" width="400" alt="image" src="https://user-images.githubusercontent.com/72302948/215354665-7b54dbde-2140-46ab-a6d2-e5a4d3be9a4f.png">
+<br>
+<br>
+
+<img align="left" padding-left="5px" width="400" alt="image" src="https://user-images.githubusercontent.com/72302948/215354665-7b54dbde-2140-46ab-a6d2-e5a4d3be9a4f.png">
+
+<br>
 
 Next it will start necessary containers such as Rocket.Chat and mongodb using `dockerd` and wait until the container are fully started, it won't start a new container everytime you start, it will look for the running container and just create the ones which are not present.
 Along with that, it also creates an admin user for the initialised Rocket.Chat Server, which will later be helpful for installing the apps inside, you will soon have an option to configure everything manually with some flags and yaml files.
