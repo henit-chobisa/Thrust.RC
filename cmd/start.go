@@ -20,13 +20,14 @@ var start = &cobra.Command{
 	DisableFlagsInUseLine: true,
 	Args:                  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		checkConfig(args[0])
 
 		path, err := filepath.Abs(args[0])
 
 		if err != nil {
 			return err
 		}
+
+		checkConfig(args[0])
 
 		appInfo, err := getAppInfo(path)
 
