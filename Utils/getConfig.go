@@ -1,7 +1,8 @@
 package Utils
 
 import (
-	"AppsCompanion/enums"
+	"thrust/enums"
+
 	"github.com/spf13/viper"
 )
 

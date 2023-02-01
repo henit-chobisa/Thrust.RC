@@ -11,11 +11,9 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "rc-companion",
-	Short: "RC-Companion helps you setup a test environment for your rocket.chat apps blazingly fast, where you can use and test your Rocket.chat apps",
-	Long: `Are you a Rocket.Chat App Developer?
-
-	Stop! configuring your workspace everytime you wanna test Rocket.Chat Apps and waste the initial 20 mins of yours. This App does all that work for you, just place the binary in your directory and execute it. On launch it sets up everything which you would need and launches an RC Server and installs the app in that for you to test.`,
+	Use:   "thrust",
+	Short: "Thrust helps you setup a test environment for your rocket.chat apps blazingly fast, where you can use and test your Rocket.chat apps",
+	Long:  `Stop configuring your workspace everytime you wanna test Rocket.Chat Apps and waste the initial 20 mins of yours, let thrust handle it, just type thrust start <your_app_directory>. On launch it sets up everything which you would need and launches an RC Server and installs the app in that for you to test.`,
 }
 
 func Execute() {
@@ -26,7 +24,7 @@ func Execute() {
 }
 
 func initializeConfig() {
-	viper.SetConfigName(".rc")
+	viper.SetConfigName(".thrust")
 	viper.SetConfigType("yaml")
 }
 

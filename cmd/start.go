@@ -1,13 +1,14 @@
 package cmd
 
 import (
-	constants "AppsCompanion/Packages/Constants"
-	models "AppsCompanion/Packages/Models"
 	"fmt"
 	"os"
+	"os/signal"
 	"path/filepath"
+	constants "thrust/Packages/Constants"
+	models "thrust/Packages/Models"
 
-	"AppsCompanion/Packages/Handlers"
+	"thrust/Packages/Handlers"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -20,9 +21,22 @@ var start = &cobra.Command{
 	DisableFlagsInUseLine: true,
 	Args:                  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		checkConfig(args[0])
+
+		c := make(chan os.Signal, 1)
+		signal.Notify(c, os.Interrupt)
+		go func() {
+			<-c
+			Handlers.Cleanup()
+			os.Exit(1)
+		}()
 
 		path, err := filepath.Abs(args[0])
+
+		if err != nil {
+			return err
+		}
+
+		checkConfig(args[0])
 
 		appInfo, err := getAppInfo(path)
 
@@ -95,6 +109,10 @@ var start = &cobra.Command{
 
 		return nil
 	},
+	PostRunE: func(cmd *cobra.Command, args []string) error {
+		fmt.Println("RunE has been completed and is terminating")
+		return nil
+	},
 }
 
 func init() {
@@ -113,6 +131,10 @@ func initStartFlags() {
 	// start.Flags().BoolP("deps", "d", true, constants.Blue+"Installs your app dependencies at the beginning, disable if you don't wanna run `npm i` on every run."+constants.White)
 
 	// start.Flags().String("composefilepath", "./", constants.Blue+"docker-compose file path, if you want any additional containers to start along with the environment"+constants.White)
+
+	// TODO : Take Rocket.Chat version too
+	// TODO : have a flag of new Rocket.Chat Server
+	// TODO : Allow sharing of context in server, what you have to do is load you app into an ec2 instance and share that instance to the other user, there would be a new command something like thrust view <id of the instance> and we will open this container as a remote container to the workspace
 
 	bindWithFlags()
 }

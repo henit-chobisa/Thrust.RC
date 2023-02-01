@@ -1,19 +1,19 @@
 package Handlers
 
 import (
-	constants "AppsCompanion/Packages/Constants"
-	"AppsCompanion/Packages/DockerSDK"
-	"AppsCompanion/Packages/DockerSDK/DefaultContainers"
-	initiateadmin "AppsCompanion/Packages/InitiateAdmin"
-	models "AppsCompanion/Packages/Models"
-	"AppsCompanion/Utils"
-	"AppsCompanion/tui/components/Page"
 	"context"
 	"fmt"
 	"io"
 	"os"
 	"strings"
 	"sync"
+	constants "thrust/Packages/Constants"
+	"thrust/Packages/DockerSDK"
+	"thrust/Packages/DockerSDK/DefaultContainers"
+	initiateadmin "thrust/Packages/InitiateAdmin"
+	models "thrust/Packages/Models"
+	"thrust/Utils"
+	"thrust/tui/components/Page"
 	"time"
 
 	"github.com/docker/docker/api/types"
@@ -250,4 +250,13 @@ func ShowLogs(containerID string) error {
 	}
 	io.Copy(os.Stdout, out)
 	return nil
+}
+
+func Cleanup() {
+
+	/*
+		TODO: Find out which companion containers are running
+		TODO: If there are only 3 containers running, rc, mongo and companion, close and distroy all of those,
+		TODO: If there are more than 3 containers running, clear the companion container for the current directory and the given id
+	*/
 }

@@ -1,14 +1,14 @@
 package initiateadmin
 
 import (
-	constants "AppsCompanion/Packages/Constants"
-	"AppsCompanion/Utils"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	constants "thrust/Packages/Constants"
+	"thrust/Utils"
 	"time"
 )
 

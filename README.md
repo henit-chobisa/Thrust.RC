@@ -1,16 +1,16 @@
 
 <p align="center">
-  <a href="https://www.gitpod.io">
-    <img src="https://user-images.githubusercontent.com/72302948/215353380-af7a74e4-e3cc-446c-b853-d1c12bc275ef.png" alt="Thrust Logo" height="250" />
+  <a href="https://www.twitter.com/henit_chobisa">
+    <img src="https://user-images.githubusercontent.com/72302948/215353380-af7a74e4-e3cc-446c-b853-d1c12bc275ef.png" alt="thrust Logo" height="250" />
     <br />
-    <strong>Thrust</strong>
+    <strong>thrust</strong>
   </a>
   <br />
   <span>Test Companion for Rocket.Chat Apps</span>
 </p>
 
 Stop configuring your workspace everytime you wanna test Rocket.Chat Apps and waste the initial 20 mins of yours.
-Let thrust handle it, Thrust downloads manages and runs container based on Rocket.Chat and Rocket.Chat apps, and sets up your Rocket.Chat App workspace under 1 minute,just place the binary in your directory and execute it.
+Let thrust handle it, thrust downloads manages and runs container based on Rocket.Chat and Rocket.Chat apps, and sets up your Rocket.Chat App workspace under 1 minute,just place the binary in your directory and execute it.
 On launch it sets up everything which you would need and launches an RC Server and installs the app in that for you to test, making your life wayyyy easier that before.
 
 # Prerequisites
@@ -21,14 +21,13 @@ On launch it sets up everything which you would need and launches an RC Server a
 - Start Docker
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
- wget https://github.com/henit-chobisa/RC-Test-Environment-Companion/releases/download/v2.0.1/AppsCompanion_linux
- chmod +x AppsCompanion_linux
+sudo bash -c "curl -L https://github.com/henit-chobisa/Thrust.RC/releases/download/v2.0.1/AppsCompanion_linux  > /usr/bin/thrust && chmod +x /usr/bin/thrust"
 ```
 - Now execute the binary in your shell 
 ```sh
-./AppsCompanion_linux start <path to your app directory>
+./thrust_linux start <path to your app directory>
 
-# ./AppsCompanion_linux start ./
+# ./thrust_linux start ./
 ```
 Use mac binary if you're a mac user, That's it sit back & relax!
 
