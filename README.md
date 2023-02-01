@@ -17,7 +17,7 @@ On launch it sets up everything which you would need and launches an RC Server a
 - Docker in running state, that's it.
 - No need to even do `npm install`, thrust will take care of that
 
-# How to use it ?
+# How to use it ? ( Linux only, mac would be there soon )
 - Start Docker
 - Download the binary using `wget` from github and provide executable permissions
 ```bash
