@@ -25,7 +25,7 @@ sudo bash -c "curl -L https://github.com/henit-chobisa/Thrust.RC/releases/downlo
 ```
 - Now execute the binary in your shell 
 ```sh
-./thrust_linux start <path to your app directory>
+thrust start <path to your app directory>
 
 # ./thrust_linux start ./
 ```
