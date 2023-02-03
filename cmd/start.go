@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	constants "thrust/Packages/Constants"
 	models "thrust/Packages/Models"
+	"time"
 
 	"thrust/Packages/Handlers"
 
@@ -39,6 +40,9 @@ var start = &cobra.Command{
 		checkConfig(args[0])
 
 		appInfo, err := getAppInfo(path)
+		_, err = getRCConfig(path)
+
+		time.Sleep(5 * time.Second)
 
 		if err != nil {
 			fmt.Println(constants.Red + "`app.json` file not found in the given directory " + path + "\n Please consider rechecking and try again.")
@@ -148,6 +152,13 @@ func getAppInfo(path string) (appInfo *models.AppInfo, err error) {
 	}
 }
 
+func getRCConfig(path string) (appConfig *models.AppsConfig, err error) {
+	if _, err = os.Stat(path + "/.rcappsconfig"); err == nil {
+		appConfig, err = appConfig.New(path + "/.rcappsconfig")
+	}
+	return
+}
+
 func checkConfig(appDir string) {
 	viper.GetViper().AddConfigPath(viper.GetString("config"))
 	viper.GetViper().SetConfigFile(".rc.yaml")
@@ -158,7 +169,6 @@ func checkConfig(appDir string) {
 		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
 			fmt.Println(constants.Yellow + "Config File Not Provided, generating one with default configuration for you in the given directory" + constants.Yellow)
 			generateDefaultConfig(appDir)
-
 		} else {
 			fmt.Println(constants.Red + "Woops, Something went wrong :(" + constants.White)
 		}
