@@ -14,7 +14,6 @@ import (
 	models "thrust/Packages/Models"
 	"thrust/Utils"
 	"thrust/tui/components/Page"
-	"time"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
@@ -199,8 +198,6 @@ func StartContainersWithDefaultNetwork(containers map[string]string) error {
 
 		fmt.Println(Utils.Tick() + "Started Rocket.Chat Container with ID " + rocketChatID)
 	}
-
-	time.Sleep(10 * time.Second)
 
 	return nil
 }
