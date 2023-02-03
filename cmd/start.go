@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 	constants "thrust/Packages/Constants"
 	models "thrust/Packages/Models"
-	"time"
 
 	"thrust/Packages/Handlers"
 
@@ -41,8 +40,6 @@ var start = &cobra.Command{
 
 		appInfo, err := getAppInfo(path)
 		_, err = getRCConfig(path)
-
-		time.Sleep(5 * time.Second)
 
 		if err != nil {
 			fmt.Println(constants.Red + "`app.json` file not found in the given directory " + path + "\n Please consider rechecking and try again.")
