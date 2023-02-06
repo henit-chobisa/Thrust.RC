@@ -3,21 +3,23 @@ package DefaultContainers
 import (
 	constants "thrust/Packages/Constants"
 	"thrust/Packages/DockerSDK"
+	models "thrust/Packages/Models"
 	"thrust/Utils"
 
 	"github.com/docker/go-connections/nat"
 )
 
 func LaunchMongoDbContainer(sdk DockerSDK.Docker, networkID string) (string, error) {
-	constainerID, err := sdk.CreateContainer(
-		networkID,
-		"mongodb_"+Utils.RandomString(5),
-		constants.MongoDBImage,
-		nat.PortSet{
+
+	mongoDBContaier := models.Container{
+		NetworkID:     networkID,
+		ContainerName: "mongodb_" + Utils.RandomString(5),
+		Image:         constants.MongoDBImage,
+		ExposedPort: nat.PortSet{
 			"27017/tcp": {},
 		},
-		nil,
-		[]string{
+		PortBindings: nil,
+		Env: []string{
 			"MONGODB_REPLICA_SET_MODE=primary",
 			"MONGODB_REPLICA_SET_NAME=rs0",
 			"MONGODB_PORT_NUMBER=27017",
@@ -27,20 +29,21 @@ func LaunchMongoDbContainer(sdk DockerSDK.Docker, networkID string) (string, err
 			"MONGODB_ENABLE_JOURNAL=true",
 			"ALLOW_EMPTY_PASSWORD=yes",
 		},
-		map[string]struct{}{
+		Volumes: map[string]struct{}{
 			"/bitnami/mongodb": {},
 		},
-		nil,
-		[]string{
+		Binds: nil,
+		Aliases: []string{
 			"mongodb",
 			"mongo",
 		},
-		nil,
-		nil,
-		false,
-		nil,
-		false,
-	)
+		Links:    nil,
+		Mount:    nil,
+		Commands: nil,
+		Stdout:   false,
+	}
+
+	constainerID, err := sdk.CreateContainer(mongoDBContaier, false)
 
 	return constainerID, err
 }
