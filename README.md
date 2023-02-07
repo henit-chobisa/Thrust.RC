@@ -20,10 +20,19 @@ On launch it sets up everything which you would need and launches an RC Server a
 # How to use it ? ( Linux only, mac would be there soon )
 - Start Docker
 - Download the binary using `wget` from github and provide executable permissions
+
+### Linux ( amd64 )
+
 ```bash
-sudo bash -c "curl -L https://github.com/henit-chobisa/Thrust.RC/releases/download/v2.0.1/AppsCompanion_linux  > /usr/bin/thrust && chmod +x /usr/bin/thrust"
+sudo wget -O - -c https://github.com/henit-chobisa/Thrust.RC/releases/download/v2.0.2/thrust.RC_2.0.2_Linux_amd64.tar.gz | sudo tar -xz -C /usr/bin | sudo mv /usr/bin/thrust.RC /usr/bin/thrust
 ```
-- Now execute the binary in your shell 
+
+### Mac ( amd64 )
+```bash
+sudo wget -O - -c https://github.com/henit-chobisa/Thrust.RC/releases/download/v2.0.2/thrust.RC_2.0.2_Darwin_amd64.tar.gz | sudo tar -xz -C /usr/bin | sudo mv /usr/bin/thrust.RC /usr/bin/thrust
+```
+
+- Now execute thrust using  
 ```sh
 thrust start <path to your app directory>
 
