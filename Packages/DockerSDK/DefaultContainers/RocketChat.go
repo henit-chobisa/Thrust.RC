@@ -31,7 +31,7 @@ func LaunchRocketChatContainer(sdk DockerSDK.Docker, networkID string) (string, 
 			"OVERWRITE_SETTING_Show_Setup_Wizard=Completed",
 		}, Volumes: nil, Binds: nil, Aliases: []string{
 			"rocketchat",
-		}, Links: nil, Mount: nil, Commands: nil, Stdout: false,
+		}, Links: nil, Mount: nil, Commands: nil, Stdout: false, AutoRemove: false,
 	}
 
 	containerID, err := sdk.CreateContainer(rocketChatContainer, false)
