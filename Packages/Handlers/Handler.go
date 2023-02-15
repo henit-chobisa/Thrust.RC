@@ -97,13 +97,7 @@ func PullImages(images map[string]string) error {
 	return nil
 }
 
-func CheckRequiredContainers(app *models.AppInfo) (containersToStart map[string]string, companionStart bool, companionID string, err error) {
-	fmt.Printf(constants.Blue + "\n🐳 Finding Running Containers\n\n" + constants.White)
-	client, err := DockerSDK.GetNewClient()
-	if err != nil {
-		return nil, false, "", err
-	}
-
+func getRunningContainers(client *DockerSDK.Docker) (*[]types.Container, error) {
 	filter := filters.NewArgs()
 
 	filter.Add("ancestor", constants.RocketChatImage)
@@ -112,7 +106,21 @@ func CheckRequiredContainers(app *models.AppInfo) (containersToStart map[string]
 	filter.Add("status", "running")
 	filter.Add("network", "RCAPPSDEFAULT")
 
-	containers, err := client.FindContainers(filter)
+	return client.FindContainers(filter)
+}
+
+func CheckRequiredContainers(app *models.AppInfo) (containersToStart map[string]string, companionStart bool, companionID string, err error) {
+	fmt.Printf(constants.Blue + "\n🐳 Finding Running Containers\n\n" + constants.White)
+	client, err := DockerSDK.GetNewClient()
+	if err != nil {
+		return nil, false, "", err
+	}
+
+	if err != nil {
+		return nil, false, "", err
+	}
+
+	containers, err := getRunningContainers(client)
 
 	if err != nil {
 		return nil, false, "", err
@@ -125,9 +133,11 @@ func CheckRequiredContainers(app *models.AppInfo) (containersToStart map[string]
 	companionStart = false
 
 	for _, container := range *containers {
-		if !strings.HasPrefix(container.Names[0], companionName) {
+		if companionName != container.Names[0] && !strings.HasPrefix(container.Names[0], "/companion") {
+			fmt.Println(Utils.Tick() + containersToStart[container.Image] + " : " + container.ID + " : " + container.Names[0] + " : " + container.Image + " : " + container.Status)
+			delete(containersToStart, container.Image)
 			continue
-		} else {
+		} else if companionName == container.Names[0] {
 			fmt.Println(Utils.Tick() + containersToStart[container.Image] + " : " + container.ID + " : " + container.Names[0] + " : " + container.Image + " : " + container.Status)
 
 			if container.Image == constants.CompanionImage {
@@ -249,11 +259,32 @@ func ShowLogs(containerID string) error {
 	return nil
 }
 
-func Cleanup() {
+func Cleanup(app *models.AppInfo) error {
 
-	/*
-		TODO: Find out which companion containers are running
-		TODO: If there are only 3 containers running, rc, mongo and companion, close and distroy all of those,
-		TODO: If there are more than 3 containers running, clear the companion container for the current directory and the given id
-	*/
+	client, err := DockerSDK.GetNewClient()
+
+	if err != nil {
+		return err
+	}
+
+	runningContainers, err := getRunningContainers(client)
+
+	companionName := "/companion_" + app.Name + app.Id + app.Version
+
+	if err != nil {
+		return err
+	}
+
+	wg := new(sync.WaitGroup)
+	wg.Add(len(*runningContainers))
+	fmt.Println(len(*runningContainers))
+	for _, container := range *runningContainers {
+		if len(*runningContainers) == 3 || container.Names[0] == companionName {
+			go client.RemoveContainer(wg, container.ID)
+		}
+	}
+
+	wg.Wait()
+
+	return nil
 }

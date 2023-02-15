@@ -19,4 +19,5 @@ type Container struct {
 	Mount         []mount.Mount
 	Commands      []string
 	Stdout        bool
+	AutoRemove    bool
 }

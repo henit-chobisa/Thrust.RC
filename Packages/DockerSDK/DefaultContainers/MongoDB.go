@@ -37,10 +37,11 @@ func LaunchMongoDbContainer(sdk DockerSDK.Docker, networkID string) (string, err
 			"mongodb",
 			"mongo",
 		},
-		Links:    nil,
-		Mount:    nil,
-		Commands: nil,
-		Stdout:   false,
+		Links:      nil,
+		Mount:      nil,
+		Commands:   nil,
+		Stdout:     false,
+		AutoRemove: false,
 	}
 
 	constainerID, err := sdk.CreateContainer(mongoDBContaier, false)

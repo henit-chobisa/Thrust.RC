@@ -70,6 +70,18 @@ func (d *Docker) FindContainers(filters filters.Args) (*[]types.Container, error
 	return &containers, err
 }
 
+func (d *Docker) RemoveContainer(wg *sync.WaitGroup, containerID string) error {
+
+	err := d.Client.ContainerRemove(context.Background(), containerID, types.ContainerRemoveOptions{
+		Force:         true,
+		RemoveVolumes: true,
+	})
+
+	wg.Done()
+
+	return err
+}
+
 func (d *Docker) PullImage(image string, wg *sync.WaitGroup) error {
 	defer wg.Done()
 	out, err := d.Client.ImagePull(context.TODO(), image, types.ImagePullOptions{})
@@ -141,14 +153,14 @@ func (d *Docker) CreateContainer(containerDesc models.Container, showLogs bool) 
 		Env:          containerDesc.Env,
 		Volumes:      containerDesc.Volumes,
 	}, &container.HostConfig{
-		// AutoRemove:   true,
+		AutoRemove:   containerDesc.AutoRemove,
 		Binds:        containerDesc.Binds,
 		Mounts:       containerDesc.Mount,
 		PortBindings: containerDesc.PortBindings,
-		RestartPolicy: container.RestartPolicy{
-			Name:              "on-failure",
-			MaximumRetryCount: 2,
-		},
+		// RestartPolicy: container.RestartPolicy{
+		// 	Name:              "on-failure",
+		// 	MaximumRetryCount: 2,
+		// },
 		Links:       containerDesc.Links,
 		NetworkMode: "bridge",
 	}, &network.NetworkingConfig{

@@ -22,14 +22,6 @@ var start = &cobra.Command{
 	Args:                  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		c := make(chan os.Signal, 1)
-		signal.Notify(c, os.Interrupt)
-		go func() {
-			<-c
-			Handlers.Cleanup()
-			os.Exit(1)
-		}()
-
 		path, err := filepath.Abs(args[0])
 
 		if err != nil {
@@ -40,6 +32,14 @@ var start = &cobra.Command{
 
 		appInfo, err := getAppInfo(path)
 		_, err = getRCConfig(path)
+
+		c := make(chan os.Signal, 1)
+		signal.Notify(c, os.Interrupt)
+		go func() {
+			<-c
+			Handlers.Cleanup(appInfo)
+			os.Exit(1)
+		}()
 
 		if err != nil {
 			fmt.Println(constants.Red + "`app.json` file not found in the given directory " + path + "\n Please consider rechecking and try again.")
