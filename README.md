@@ -24,12 +24,12 @@ On launch it sets up everything which you would need and launches an RC Server a
 ### Linux ( amd64 )
 
 ```bash
-sudo wget -O - -c https://github.com/henit-chobisa/Thrust.RC/releases/download/v2.0.3/thrust.RC_2.0.2_Linux_amd64.tar.gz | sudo tar -xz -C /usr/local/bin && sudo mv /usr/local/bin/thrust.RC /usr/local/bin/thrust
+sudo wget -O - -c https://github.com/henit-chobisa/Thrust.RC/releases/download/v2.0.3/thrust.RC_2.0.3_Linux_amd64.tar.gz | sudo tar -xz -C /usr/local/bin && sudo mv /usr/local/bin/thrust.RC /usr/local/bin/thrust
 ```
 
 ### Mac ( amd64 )
 ```bash
-sudo wget -O - -c https://github.com/henit-chobisa/Thrust.RC/releases/download/v2.0.3/thrust.RC_2.0.2_Darwin_amd64.tar.gz | sudo tar -xz -C /usr/local/bin && sudo mv /usr/local/bin/thrust.RC /usr/local/bin/thrust
+sudo wget -O - -c https://github.com/henit-chobisa/Thrust.RC/releases/download/v2.0.3/thrust.RC_2.0.3_Darwin_amd64.tar.gz | sudo tar -xz -C /usr/local/bin && sudo mv /usr/local/bin/thrust.RC /usr/local/bin/thrust
 ```
 
 - Now execute thrust using  
