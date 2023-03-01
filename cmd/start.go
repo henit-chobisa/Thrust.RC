@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"os/signal"
@@ -19,19 +20,42 @@ var start = &cobra.Command{
 	Short:                 "This initiates Rocket.Chat container and injects your app inside.",
 	Long:                  "Initiates a pre-setup Rocket.Chat development environment for using Rocket.Chat apps using docker, installs your app inside and launches a browser window for you.\n" + constants.Red + "Docker must be running to use this." + constants.White,
 	DisableFlagsInUseLine: true,
-	Args:                  cobra.ExactArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) error {
-
-		path, err := filepath.Abs(args[0])
-
-		if err != nil {
-			return err
+	Args: func(cmd *cobra.Command, args []string) error {
+		if viper.GetBool("appMode") {
+			if len(args) != 1 {
+				return errors.New("Sorry, as you are using Thrust in app mode, you must provide path of the app")
+			}
+		} else {
+			if len(args) != 0 {
+				return errors.New("Thrust is not going to process any app as you're not in app mode, there is no need to provide any argument")
+			}
 		}
+		return nil
+	},
+	RunE: func(cmd *cobra.Command, args []string) (err error) {
 
-		checkConfig(args[0])
+		isAppMode := viper.GetBool("appMode")
 
-		appInfo, err := getAppInfo(path)
-		_, err = getRCConfig(path)
+		var appInfo *models.AppInfo
+		var path string
+
+		if isAppMode {
+			path, err = filepath.Abs(args[0])
+
+			if err != nil {
+				return err
+			}
+
+			checkConfig(args[0])
+
+			appInfo, err = getAppInfo(path)
+
+			if err != nil {
+				return err
+			}
+
+			_, err = getRCConfig(path)
+		}
 
 		c := make(chan os.Signal, 1)
 		signal.Notify(c, os.Interrupt)
@@ -78,7 +102,7 @@ var start = &cobra.Command{
 			}
 		}
 
-		containersToStart, startCompanion, companionID, err := Handlers.CheckRequiredContainers(appInfo)
+		containersToStart, startCompanion, containerIDs, err := Handlers.CheckRequiredContainers(appInfo)
 
 		if err != nil {
 			return err
@@ -88,7 +112,7 @@ var start = &cobra.Command{
 		_, startMongoDb := containersToStart[constants.MongoDBImage]
 
 		if startMongoDb || startRocketChat {
-			err = Handlers.StartContainersWithDefaultNetwork(containersToStart)
+			_, err = Handlers.StartContainersWithDefaultNetwork(containersToStart)
 		}
 
 		if err != nil {
@@ -97,15 +121,18 @@ var start = &cobra.Command{
 
 		Handlers.CreateAdminUser()
 
-		fmt.Println(startCompanion)
-
-		if startCompanion {
+		if startCompanion && isAppMode {
 			err := Handlers.StartCompanionContainer(path, appInfo)
 			if err != nil {
 				return err
 			}
 		} else {
-			Handlers.ShowLogs(companionID)
+			if isAppMode {
+				Handlers.ShowLogs(containerIDs[constants.CompanionImage])
+			} else {
+				fmt.Printf(constants.Blue + "\n🐳 Showing logs of Already Running Rocket.Chat Instance\n\n" + constants.White)
+				Handlers.ShowLogs(containerIDs[constants.RocketChatImage])
+			}
 		}
 
 		return nil
@@ -122,20 +149,24 @@ func init() {
 }
 
 func initStartFlags() {
-	// start.Flags().StringP("config", "c", "./", constants.Blue+"Path of the configuration file for companion, if not found will use the default values."+constants.White)
-	// start.Flags().BoolP("watcher.watcher", "w", true, constants.Blue+"Specify whether you want use hot-reloading"+constants.White)
-	// start.Flags().StringP("admin.username", "a", "user0", constants.Blue+"Admin Username for your rocket.chat server"+constants.White)
-	// start.Flags().StringP("admin.email", "e", "a@b.com", constants.Blue+"Admin Email for your rocket.chat server"+constants.White)
-	// start.Flags().StringP("admin.password", "p", "123456", constants.Blue+"Admin Username for your rocket.chat server"+constants.White)
-	// start.Flags().StringP("admin.name", "n", "user", constants.Blue+"Admin Name for your rocket.chat server"+constants.White)
+
+	start.Flags().StringP("admin.username", "a", "user0", constants.Blue+"Admin Username for your rocket.chat server"+constants.White)
+	start.Flags().StringP("admin.email", "e", "a@b.com", constants.Blue+"Admin Email for your rocket.chat server"+constants.White)
+	start.Flags().StringP("admin.password", "p", "123456", constants.Blue+"Admin Username for your rocket.chat server"+constants.White)
+	start.Flags().StringP("admin.name", "n", "user", constants.Blue+"Admin Name for your rocket.chat server"+constants.White)
+	start.Flags().Bool("appMode", true, constants.Blue+"Using Thrust's Rocket.Chat Instance for other dependent softwares"+constants.White)
+
 	// start.Flags().BoolP("virtual", "v", true, constants.Blue+"Mounts your app directory to a companion container where all the app dependencies are present like node, npm & rc-apps cli, false uses the local environment for the dependencies."+constants.White)
+
 	// start.Flags().BoolP("deps", "d", true, constants.Blue+"Installs your app dependencies at the beginning, disable if you don't wanna run `npm i` on every run."+constants.White)
 
 	// start.Flags().String("composefilepath", "./", constants.Blue+"docker-compose file path, if you want any additional containers to start along with the environment"+constants.White)
 
 	// TODO : Take Rocket.Chat version too
+
 	// TODO : have a flag of new Rocket.Chat Server
-	// TODO : Allow sharing of context in server, what you have to do is load you app into an ec2 instance and share that instance to the other user, there would be a new command something like thrust view <id of the instance> and we will open this container as a remote container to the workspace
+
+	// TODO : Have a configuration option that is also associated with the flags and turn off app mode, only has the rocket.chat mode and show you the rocket.chat logs
 
 	bindWithFlags()
 }
