@@ -66,6 +66,31 @@ In the end you can see the companion container's logs, which will show you two o
 ## Using on EC2 Instance
 Please have a look on this [short manual](https://henitchobisa.notion.site/Setting-up-App-s-Companion-in-EC2-fdde72b19afc40ed93c9ded5887a641c) for end to end configuration of your ec2 with Apps' conpanion.
 
+## Providing Custom Configuration
+When Thrust Starts it creates a new configuration file `.rc.yaml` which is responsible for assisting Thrust with external configuration.
+- You can pass your custom environment variables for Rocket.Chat and MongoDB Externally
+- You can disable `appMode`, with this you can use thrust's capability of launching Rocket.Chat and MongoDB containers with any other dependent piece of Software.
+- You can pass your own administrator credentials for Thrust to use by default
+
+```yaml
+admin:
+    email: a@b.com
+    name: user
+    password: "123456"
+    username: user0
+
+appMode: true
+
+env:
+    RocketChat:
+        - "OVERWRITE_SETTING_API_Enable_Shields=true" # dummy variable
+        - "OVERWRITE_SETTING_API_Enable_Direct_Message_History_EndPoint=true" # dummy variable
+    MongoDB:
+        #  Some other configuration options
+
+```
+Have a look on [Rocket.Chat User Documentation](http://docs.rocket.chat/deploy/rocket.chat-environment-configuration/environment-variables), for understanding more on overriding environment variables in Rocket.Chat.
+
 ### debugging
 - Docker-Compose "executable file not found in $PATH"
 ```
