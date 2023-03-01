@@ -7,6 +7,7 @@ import (
 	"thrust/Utils"
 
 	"github.com/docker/go-connections/nat"
+	"github.com/spf13/viper"
 )
 
 func LaunchRocketChatContainer(sdk DockerSDK.Docker, networkID string) (string, error) {
@@ -21,7 +22,7 @@ func LaunchRocketChatContainer(sdk DockerSDK.Docker, networkID string) (string, 
 					HostPort: "3000",
 				},
 			},
-		}, Env: []string{
+		}, Env: append(viper.GetStringSlice("env.RocketChat"), []string{
 			"MONGO_URL=mongodb://mongo:27017/rocketchat?replicaSet=rs0",
 			"MONGO_OPLOG_URL=mongodb://mongo:27017/local?replicaSet=rs0",
 			"ROOT_URL=http://localhost:3000",
@@ -29,12 +30,18 @@ func LaunchRocketChatContainer(sdk DockerSDK.Docker, networkID string) (string, 
 			"DEPLOY_METHOD=docker",
 			"OVERWRITE_SETTING_Apps_Framework_Development_Mode=true",
 			"OVERWRITE_SETTING_Show_Setup_Wizard=Completed",
-		}, Volumes: nil, Binds: nil, Aliases: []string{
+		}...), Volumes: nil, Binds: nil, Aliases: []string{
 			"rocketchat",
 		}, Links: nil, Mount: nil, Commands: nil, Stdout: false, AutoRemove: false,
 	}
 
-	containerID, err := sdk.CreateContainer(rocketChatContainer, false)
+	var showLogs bool = true
+
+	if viper.GetBool("appMode") {
+		showLogs = false
+	}
+
+	containerID, err := sdk.CreateContainer(rocketChatContainer, showLogs)
 
 	return containerID, err
 }

@@ -5,6 +5,8 @@ import (
 	constants "thrust/Packages/Constants"
 	"thrust/Packages/DockerSDK"
 	models "thrust/Packages/Models"
+
+	"github.com/spf13/viper"
 )
 
 func LaunchCompanionContainer(sdk DockerSDK.Docker, networkID string, path string, name string) (containerID string, err error) {
@@ -17,8 +19,8 @@ func LaunchCompanionContainer(sdk DockerSDK.Docker, networkID string, path strin
 		PortBindings:  nil,
 		Env: []string{
 			"url=http://rocketchat:3000",
-			"username=user0",
-			"password=123456",
+			"username=" + viper.GetString("admin.username"),
+			"password=" + viper.GetString("admin.password"),
 		},
 		Volumes: nil,
 		Binds: []string{

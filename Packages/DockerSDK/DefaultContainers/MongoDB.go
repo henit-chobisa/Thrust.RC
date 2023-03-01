@@ -7,6 +7,7 @@ import (
 	"thrust/Utils"
 
 	"github.com/docker/go-connections/nat"
+	"github.com/spf13/viper"
 )
 
 func LaunchMongoDbContainer(sdk DockerSDK.Docker, networkID string) (string, error) {
@@ -19,7 +20,7 @@ func LaunchMongoDbContainer(sdk DockerSDK.Docker, networkID string) (string, err
 			"27017/tcp": {},
 		},
 		PortBindings: nil,
-		Env: []string{
+		Env: append(viper.GetStringSlice("env.MongoDB"), []string{
 			"MONGODB_REPLICA_SET_MODE=primary",
 			"MONGODB_REPLICA_SET_NAME=rs0",
 			"MONGODB_PORT_NUMBER=27017",
@@ -28,7 +29,7 @@ func LaunchMongoDbContainer(sdk DockerSDK.Docker, networkID string) (string, err
 			"MONGODB_ADVERTISED_HOSTNAME=mongodb",
 			"MONGODB_ENABLE_JOURNAL=true",
 			"ALLOW_EMPTY_PASSWORD=yes",
-		},
+		}...),
 		Volumes: map[string]struct{}{
 			"/bitnami/mongodb": {},
 		},

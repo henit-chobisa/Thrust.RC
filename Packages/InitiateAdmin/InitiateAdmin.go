@@ -10,6 +10,8 @@ import (
 	constants "thrust/Packages/Constants"
 	"thrust/Utils"
 	"time"
+
+	"github.com/spf13/viper"
 )
 
 func setUser(user0 string, email string, pass string, name string) (bool, bool) {
@@ -39,10 +41,10 @@ func setUser(user0 string, email string, pass string, name string) (bool, bool) 
 
 func Initiate() {
 	user := make(map[string]interface{}, 4)
-	user["email"] = "a@b.com"
-	user["username"] = "user0"
-	user["pass"] = "123456"
-	user["name"] = "user"
+	user["email"] = viper.GetString("admin.email")
+	user["username"] = viper.GetString("admin.username")
+	user["pass"] = viper.GetString("admin.password")
+	user["name"] = viper.GetString("admin.name")
 
 	iterations := 0
 	status := false
